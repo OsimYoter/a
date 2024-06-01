@@ -139,36 +139,37 @@
     }
 
     function sendToGoogleSheet() {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec'; // Replace with your Web App URL
-      const adNumber = getParameterByName('number');
-
-      const now = new Date();
-      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-      const data = `adNumber=${adNumber}&dateTime=${dateTime}`;
-
-      fetch(webAppUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data,
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Data sent to Google Sheet successfully');
-        } else {
-          console.error('Failed to send data to Google Sheet');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-
-    window.addEventListener('load', () => {
-      sendToGoogleSheet();
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec'; // Replace with your Web App URL
+    const adNumber = getParameterByName('number').split('?')[0]; // Extracting ad number from the parameter
+  
+    const now = new Date();
+    const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
+    const data = `adNumber=${adNumber}&dateTime=${dateTime}`;
+  
+    fetch(webAppUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data,
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Data sent to Google Sheet successfully');
+      } else {
+        console.error('Failed to send data to Google Sheet');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
+  }
+  
+  window.addEventListener('load', () => {
+    sendToGoogleSheet();
+  });
+
   </script>
 </body>
 </html>
