@@ -120,7 +120,7 @@
       const botToken = '7279242251:AAGPjZriCjmeMJ1m3ZOYNvhBs0Y-GyYZ2oE'; 
       const chatId = '6585766147';
       const adNumber = getParameterByName('number'); 
-      const message = `+1 ad_number:${adNumber}`; // Use template literals to include the adNumber
+      const message = `+1 ad_number:${adNumber}`;
 
       const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
