@@ -101,7 +101,6 @@
       countdownElement.textContent = countdown;
       if (countdown === 0) {
         clearInterval(countdownInterval);
-	
         redirectToWhatsapp();
       }
     }, 1000);
@@ -117,8 +116,8 @@
     }
 
     function sendTelegramMessage() {
-      const botToken = '7279242251:AAGPjZriCjmeMJ1m3ZOYNvhBs0Y-GyYZ2oE'; 
-      const chatId = '6585766147';
+      const botToken = ''; 
+      const chatId = '';
       const adNumber = getParameterByName('number'); 
       const message = `+1 ad_number:${adNumber}`;
 
@@ -139,7 +138,37 @@
       });
     }
 
-    window.addEventListener('load', sendTelegramMessage);
+    function sendToGoogleSheet() {
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycby33yQ2AIV-2D39Tdu3t362_7jvasKgd6YwJEfd6CmZ7OPgCaVf5XankIM9qXehZgDNzQ/exec'; // Replace with your Web App URL
+      const adNumber = getParameterByName('number');
+
+      const now = new Date();
+      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const data = `adNumber=${adNumber}&dateTime=${dateTime}`;
+
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Data sent to Google Sheet successfully');
+        } else {
+          console.error('Failed to send data to Google Sheet');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      sendToGoogleSheet();
+    });
   </script>
 </body>
 </html>
