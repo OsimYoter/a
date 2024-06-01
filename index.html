@@ -101,6 +101,7 @@
       countdownElement.textContent = countdown;
       if (countdown === 0) {
         clearInterval(countdownInterval);
+	
         redirectToWhatsapp();
       }
     }, 1000);
@@ -114,6 +115,30 @@
         window.location.href = whatsappUrl;
       }
     }
+
+    function sendTelegramMessage() {
+      const botToken = '7279242251:AAGPjZriCjmeMJ1m3ZOYNvhBs0Y-GyYZ2oE'; 
+      const chatId = '6585766147'; 
+      const message = '+1-new'; 
+
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+      fetch(url, {
+        method: 'GET',
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Message sent successfully');
+        } else {
+          console.error('Failed to send message');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    window.addEventListener('load', sendTelegramMessage);
   </script>
 </body>
 </html>
