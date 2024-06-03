@@ -108,6 +108,7 @@
     }
   </style>
 </head>
+
 <body>
   <div id="ad">
     <div id="ad-text">בעוד <span id="countdown">10</span> שניות, שיחת הוואטסאפ תיפתח</div>
@@ -204,6 +205,8 @@
       const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
       const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}`;
+
+      console.log('Sending data to Google Sheet:', data); // Add this line
 
       fetch(webAppUrl, {
         method: 'POST',
