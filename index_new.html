@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>דרושים - למילואים</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -85,7 +84,6 @@
       display: none;
     }
     .modal-content {
-      direction: rtl;
       background-color: white;
       padding: 1rem;
       border-radius: 10px;
@@ -93,6 +91,7 @@
       max-width: 300px;
       width: 80%;
       animation: fadeIn 1s ease-in-out;
+      direction: rtl; /* Added for RTL support */
     }
     .modal-button {
       font-size: 1rem;
@@ -119,25 +118,14 @@
     <img src="https://i.ibb.co/0K2WrBp/photo1712774269.jpg" alt="פידבק">
   </div>
 
-  <div class="modal-container" id="continueModal">
+  <div class="modal-container" id="modal-container">
     <div class="modal-content">
-      <button class="modal-button" id="modal-whatsapp-button">מעבר להודעת וואטסאפ למגייס</button>
+      למעבר למגייס, לחץ כאן.
+      <button class="modal-button" id="modal-button">מעבר להודעת וואטסאפ למגייס</button>
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
   <script>
-    function generateUUID() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0,
-              v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-    }
-
     function getParameterByName(name, url = window.location.href) {
       name = name.replace(/[\[\]]/g, '\\$&');
       const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
@@ -147,11 +135,19 @@
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0,
+          v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
     const uuid = generateUUID();
     const countdownElement = document.getElementById('countdown');
     const whatsappButton = document.getElementById('whatsapp-button');
-    const modalWhatsappButton = document.getElementById('modal-whatsapp-button');
-    const modalContainer = document.getElementById('continueModal');
+    const modalContainer = document.getElementById('modal-container');
+    const modalButton = document.getElementById('modal-button');
 
     let countdown = 10;
     const countdownInterval = setInterval(() => {
@@ -163,12 +159,8 @@
       }
     }, 1000);
 
-    whatsappButton.addEventListener('click', () => {
-      updateContinuationStatus();
-      redirectToWhatsapp();
-    });
-
-    modalWhatsappButton.addEventListener('click', () => {
+    whatsappButton.addEventListener('click', redirectToWhatsapp);
+    modalButton.addEventListener('click', () => {
       updateContinuationStatus();
       redirectToWhatsapp();
     });
@@ -182,7 +174,7 @@
     }
 
     function updateContinuationStatus() {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbyfeWJCp0qcw3549PqFdiToPeoRnXAXBia4lya8JI_SbpaObC8B284hozRKs2TX08p9WA/exec';
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec';
       const data = `uuid=${uuid}&userContinued=true`;
 
       fetch(webAppUrl, {
