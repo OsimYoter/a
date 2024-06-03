@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>דרושים - למילואים</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    #ad {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      text-align: center;
+    }
+    #ad-text {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #thank-you-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #thank-you-text {
+      font-size: 1.2rem;
+      color: white;
+      margin-right: 1rem;
+    }
+    #countdown {
+      font-size: 1.5rem;
+      color: #FFD700;
+    }
+    img {
+      max-width: 90%;
+      max-height: 60%;
+      border: 5px solid white;
+      border-radius: 10px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      animation: fadeIn 2s ease-in-out;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="ad">
+    <div id="ad-text">בעוד <span id="countdown">10</span> שניות, שיחת הוואטסאפ תיפתח</div>
+    <div id="thank-you-container">
+      <div id="thank-you-text">תודה, צוות דרושים - למילואים</div>
+      <button id="whatsapp-button">מעבר מיידי למגייס</button>
+    </div>
+    <img src="https://i.ibb.co/0K2WrBp/photo1712774269.jpg" alt="פידבק">
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="continueModal" tabindex="-1" role="dialog" aria-labelledby="continueModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="continueModalLabel">המשך</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          הזמן הסתיים. האם ברצונך להמשיך לוואטסאפ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modal-whatsapp-button">מעבר להודעת וואטסאפ למגייס</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0,
+              v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    function getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    const uuid = generateUUID();
+    const countdownElement = document.getElementById('countdown');
+    const whatsappButton = document.getElementById('whatsapp-button');
+    const modalWhatsappButton = document.getElementById('modal-whatsapp-button');
+
+    let countdown = 10;
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      countdownElement.textContent = countdown;
+      if (countdown === 0) {
+        clearInterval(countdownInterval);
+        $('#continueModal').modal('show');
+      }
+    }, 1000);
+
+    whatsappButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
+
+    modalWhatsappButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
+
+    function redirectToWhatsapp() {
+      const phoneNumber = getParameterByName('phone');
+      if (phoneNumber) {
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=*%D7%9E.%D7%90:*%0a*%D7%A9%D7%9D+%D7%9E%D7%9C%D7%90:*%0a*%D7%AA%D7%A4%D7%A7%D7%99%D7%93+%D7%9E%D7%91%D7%95%D7%A7%D7%A9:*%0a`;
+        window.location.href = whatsappUrl;
+      }
+    }
+
+    function updateContinuationStatus() {
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec';
+      const data = `uuid=${uuid}&userContinued=true`;
+
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Continuation status updated successfully');
+        } else {
+          console.error('Failed to update continuation status');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function sendToGoogleSheet() {
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec';
+      const adNumber = getParameterByName('number').split('?')[0];
+
+      const now = new Date();
+      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}`;
+
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Data sent to Google Sheet successfully');
+        } else {
+          console.error('Failed to send data to Google Sheet');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      sendToGoogleSheet();
+    });
+
+  </script>
+</body>
+</html>
