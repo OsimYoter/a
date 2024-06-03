@@ -168,7 +168,10 @@
       }
     }, 1000);
 
-    whatsappButton.addEventListener('click', redirectToWhatsapp);
+    whatsappButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
     modalButton.addEventListener('click', () => {
       updateContinuationStatus();
       redirectToWhatsapp();
