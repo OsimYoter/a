@@ -159,8 +159,12 @@
         modalContainer.style.display = 'flex';
       }
     }, 1000);
+    
+    whatsappButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
 
-    whatsappButton.addEventListener('click', redirectToWhatsapp);
     modalButton.addEventListener('click', () => {
       updateContinuationStatus();
       redirectToWhatsapp();
