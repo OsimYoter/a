@@ -55,17 +55,22 @@
     }
     button {
       font-size: 1rem;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1.5rem; /* Increased padding for a larger button */
       color: white;
-      background-color: #007BFF;
+      background: linear-gradient(45deg, #25D366, #128C7E); /* Gradient background */
       border: none;
-      border-radius: 5px;
+      border-radius: 30px; /* More rounded corners */
       cursor: pointer;
-      animation: fadeIn 2s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+      transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
     }
+    
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(45deg, #128C7E, #25D366); /* Reverse gradient on hover */
+      transform: scale(1.05); /* Slightly increase size on hover */
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
     }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
