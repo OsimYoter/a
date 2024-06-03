@@ -21,7 +21,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 9998;
       flex-direction: column;
       text-align: center;
     }
@@ -55,23 +55,67 @@
     }
     button {
       font-size: 1rem;
-      padding: 0.5rem 1rem;
-      color: white;
-      background-color: #007BFF;
+      padding: 0.5rem 1.5rem; /* Increased padding for a larger button */
+      color: #2C3E50; /* Darker text color */
+      background: linear-gradient(45deg, #A8E6CF, #DCEDC1); /* Lighter gradient background */
       border: none;
-      border-radius: 5px;
+      border-radius: 30px; /* More rounded corners */
       cursor: pointer;
-      animation: fadeIn 2s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+      transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
     }
+    
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(45deg, #DCEDC1, #A8E6CF); /* Reverse gradient on hover */
+      transform: scale(1.05); /* Slightly increase size on hover */
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
     }
+
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    .modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+      animation: fadeIn 1s ease-in-out;
+      direction: rtl; /* Added for RTL support */
+    }
+    .modal-button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      color: #2C3E50;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .modal-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
+
+
 <body>
   <div id="ad">
     <div id="ad-text">בעוד <span id="countdown">10</span> שניות, שיחת הוואטסאפ תיפתח</div>
@@ -82,18 +126,37 @@
     <img src="https://i.ibb.co/0K2WrBp/photo1712774269.jpg" alt="פידבק">
   </div>
 
+  <div class="modal-container" id="modal-container">
+    <div class="modal-content">
+      למעבר למגייס, לחץ כאן.
+      <button class="modal-button" id="modal-button">מעבר להודעת וואטסאפ למגייס</button>
+    </div>
+  </div>
+
   <script>
     function getParameterByName(name, url = window.location.href) {
       name = name.replace(/[\[\]]/g, '\\$&');
       const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-      const results = regex.exec(url);
+      const results = regex.exec(url); // Corrected line
       if (!results) return null;
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
+
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0,
+          v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    const uuid = generateUUID();
     const countdownElement = document.getElementById('countdown');
     const whatsappButton = document.getElementById('whatsapp-button');
+    const modalContainer = document.getElementById('modal-container');
+    const modalButton = document.getElementById('modal-button');
 
     let countdown = 10;
     const countdownInterval = setInterval(() => {
@@ -101,11 +164,18 @@
       countdownElement.textContent = countdown;
       if (countdown === 0) {
         clearInterval(countdownInterval);
-        redirectToWhatsapp();
+        modalContainer.style.display = 'flex';
       }
     }, 1000);
 
-    whatsappButton.addEventListener('click', redirectToWhatsapp);
+    whatsappButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
+    modalButton.addEventListener('click', () => {
+      updateContinuationStatus();
+      redirectToWhatsapp();
+    });
 
     function redirectToWhatsapp() {
       const phoneNumber = getParameterByName('phone');
@@ -115,22 +185,22 @@
       }
     }
 
-    function sendTelegramMessage() {
-      const botToken = ''; 
-      const chatId = '';
-      const adNumber = getParameterByName('number'); 
-      const message = `+1 ad_number:${adNumber}`;
+    function updateContinuationStatus() {
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbwj4p8Vxwvwj13fSLoObA-9jOypJzY3CCP44fvH5teAY2zZiA5bJEeBPlEz8m_IN9jn8g/exec';
+      const data = `uuid=${uuid}&userContinued=true`;
 
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
-
-      fetch(url, {
-        method: 'GET',
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
       })
       .then(response => {
         if (response.ok) {
-          console.log('Message sent successfully');
+          console.log('Continuation status updated successfully');
         } else {
-          console.error('Failed to send message');
+          console.error('Failed to update continuation status');
         }
       })
       .catch(error => {
@@ -139,36 +209,38 @@
     }
 
     function sendToGoogleSheet() {
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbw3Khk3wUTv4qMIoNT6GCViCqcs0wFGPlRZQHAi_DOscfz5rQZvyX3znp4FMjfiLhWgKg/exec'; // Replace with your Web App URL
-    const adNumber = getParameterByName('number').split('?')[0]; // Extracting ad number from the parameter
-  
-    const now = new Date();
-    const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-  
-    const data = `adNumber=${adNumber}&dateTime=${dateTime}`;
-  
-    fetch(webAppUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: data,
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log('Data sent to Google Sheet successfully');
-      } else {
-        console.error('Failed to send data to Google Sheet');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbwj4p8Vxwvwj13fSLoObA-9jOypJzY3CCP44fvH5teAY2zZiA5bJEeBPlEz8m_IN9jn8g/exec';
+      const adNumber = getParameterByName('number').split('?')[0];
+
+      const now = new Date();
+      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}`;
+
+      console.log('Sending data to Google Sheet:', data); // Add this line
+
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Data sent to Google Sheet successfully');
+        } else {
+          console.error('Failed to send data to Google Sheet');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      sendToGoogleSheet();
     });
-  }
-  
-  window.addEventListener('load', () => {
-    sendToGoogleSheet();
-  });
 
   </script>
 </body>
