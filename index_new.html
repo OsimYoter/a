@@ -22,7 +22,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 9998;
       flex-direction: column;
       text-align: center;
     }
@@ -71,6 +71,41 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    .modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .modal-button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .modal-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -83,23 +118,10 @@
     <img src="https://i.ibb.co/0K2WrBp/photo1712774269.jpg" alt="פידבק">
   </div>
 
-  <!-- Bootstrap Modal -->
-  <div class="modal fade" id="continueModal" tabindex="-1" role="dialog" aria-labelledby="continueModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="continueModalLabel">המשך</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          הזמן הסתיים. האם ברצונך להמשיך לוואטסאפ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="modal-whatsapp-button">מעבר להודעת וואטסאפ למגייס</button>
-        </div>
-      </div>
+  <div class="modal-container" id="continueModal">
+    <div class="modal-content">
+      <div>למעבר למגייס, לחץ כאן.</div>
+      <button class="modal-button" id="modal-whatsapp-button">מעבר להודעת וואטסאפ למגייס</button>
     </div>
   </div>
 
@@ -129,6 +151,7 @@
     const countdownElement = document.getElementById('countdown');
     const whatsappButton = document.getElementById('whatsapp-button');
     const modalWhatsappButton = document.getElementById('modal-whatsapp-button');
+    const modalContainer = document.getElementById('continueModal');
 
     let countdown = 10;
     const countdownInterval = setInterval(() => {
@@ -136,7 +159,7 @@
       countdownElement.textContent = countdown;
       if (countdown === 0) {
         clearInterval(countdownInterval);
-        $('#continueModal').modal('show');
+        modalContainer.style.display = 'flex';
       }
     }, 1000);
 
