@@ -81,6 +81,36 @@
 
     }
 
+    #alert-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      width: 300px;
+    }
+
+    .alert {
+      text-align: center;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      font-family: inherit; /* Inherit font-family from the body */
+      direction: rtl; /* Set direction to right-to-left */
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
+
   </style>
 </head>
 <body>
@@ -100,7 +130,7 @@
       <img src="https://i.ibb.co/vZ55DHD/abc.png" alt="פידבק">
     </div>
   </div>
-
+  <div id="alert-container"></div>
   <script>
     function getParameterByName(name, url = window.location.href) {
       name = name.replace(/[\[\]]/g, '\\$&');
@@ -123,6 +153,7 @@
     const webAppUrl = 'https://script.google.com/macros/s/AKfycbyMSjH4Fv7CqHY11HriX9Oo68Kn5Ba-_cKmcxbS_EKSrBB0vXrAkcYwmZ0h1k3hjm7H7g/exec';
 
     function sendStatus(status) {
+      showAlert('success', 'וואטסאפ תכף ייפתח');
       const data = `uuid=${uuid}&status=${status}&userContinued=true`;
 
       fetch(webAppUrl, {
@@ -135,14 +166,33 @@
       .then(response => {
         if (response.ok) {
           console.log('Data sent successfully');
+          
           redirectToWhatsapp();
         } else {
           console.error('Failed to send data');
+          redirectToWhatsapp();
         }
       })
       .catch(error => {
         console.error('Error:', error);
+        redirectToWhatsapp();
       });
+    }
+
+    function showAlert(type, message) {
+      const alertContainer = document.getElementById('alert-container');
+      const alert = document.createElement('div');
+      alert.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
+      alert.setAttribute('role', 'alert');
+      alert.innerHTML = `
+        <strong>${message}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      alertContainer.appendChild(alert);
+
+      setTimeout(() => {
+        alert.remove();
+      }, 3000); // Remove the alert after 3 seconds
     }
 
     function getUserIP() {
