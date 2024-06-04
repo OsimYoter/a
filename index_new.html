@@ -20,13 +20,13 @@
       text-align: center;
       color: white;
     }
-   #ad {
+    #ad {
       width: 100%;
       max-width: 600px;
       padding: 1rem;
     }
     #ad-text {
-      font-size: 1.5rem;
+      font-size: 1.5rem; /* Adjusted font size */
       margin-bottom: 1rem;
       white-space: nowrap;
       overflow: hidden;
@@ -85,6 +85,9 @@
       <button type="button" class="btn btn-primary" onclick="sendStatus('מאגר')">מאגר</button>
       <button type="button" class="btn btn-primary" onclick="sendStatus('פטור')">פטור</button>
       <button type="button" class="btn btn-primary" onclick="sendStatus('משרת מילואים פעיל')">משרת מילואים פעיל</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-primary" onclick="sendStatus('מעבר ללא סימון')">מעבר ללא סימון</button>
     </div>
     <div class="responsive-img-container">
       <img src="https://i.ibb.co/vZ55DHD/abc.png" alt="פידבק">
