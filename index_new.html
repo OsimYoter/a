@@ -122,7 +122,7 @@
     const uuid = generateUUID();
 
     function sendStatus(status) {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbwj4p8Vxwvwj13fSLoObA-9jOypJzY3CCP44fvH5teAY2zZiA5bJEeBPlEz8m_IN9jn8g/exec';
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbxi54FqfR5_C2UXRSR5A-IlvYDP4ek2FP7weFVpKb-CopbbeM8hzCfsNlU2BbJzEWkfvA/exec';
       const adNumber = getParameterByName('number').split('?')[0];
       const now = new Date();
       const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
