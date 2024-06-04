@@ -4,145 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>דרושים - למילואים</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       overflow: hidden;
-    }
-    #ad {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background-color: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9998;
-      flex-direction: column;
+      height: 100vh;
       text-align: center;
+      color: white;
+      direction: rtl;
+    }
+    #ad {
+      width: 100%;
+      max-width: 600px;
     }
     #ad-text {
       font-size: 2rem;
-      color: white;
       margin-bottom: 1rem;
-      animation: fadeIn 1s ease-in-out;
-    }
-    #thank-you-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      animation: fadeIn 1s ease-in-out;
-    }
-    #thank-you-text {
-      font-size: 1.2rem;
-      color: white;
-      margin-right: 1rem;
-    }
-    #countdown {
-      font-size: 1.5rem;
-      color: #FFD700;
     }
     img {
       max-width: 90%;
       max-height: 60%;
       border: 5px solid white;
       border-radius: 10px;
-      animation: fadeIn 1.5s ease-in-out;
-    }
-    button {
-      font-size: 1rem;
-      padding: 0.5rem 1.5rem; /* Increased padding for a larger button */
-      color: #2C3E50; /* Darker text color */
-      background: linear-gradient(45deg, #A8E6CF, #DCEDC1); /* Lighter gradient background */
-      border: none;
-      border-radius: 30px; /* More rounded corners */
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-      transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
-    }
-    
-    button:hover {
-      background: linear-gradient(45deg, #DCEDC1, #A8E6CF); /* Reverse gradient on hover */
-      transform: scale(1.05); /* Slightly increase size on hover */
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
-    }
-
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      display: none;
-    }
-    .modal-content {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 300px;
-      width: 80%;
-      animation: fadeIn 1s ease-in-out;
-      direction: rtl; /* Added for RTL support */
-    }
-    .modal-button {
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      color: #2C3E50;
-      background-color: #007BFF;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
       margin-top: 1rem;
     }
-    .modal-button:hover {
-      background-color: #0056b3;
+    .btn-group {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+    }
+    .btn {
+      margin: 0.2rem;
     }
   </style>
 </head>
-
-
 <body>
   <div id="ad">
-    <div id="ad-text">בעוד <span id="countdown">10</span> שניות, שיחת הוואטסאפ תיפתח</div>
-    <div id="thank-you-container">
-      <div id="thank-you-text">תודה, צוות דרושים - למילואים</div>
-      <button id="whatsapp-button">מעבר מיידי למגייס</button>
+    <div id="ad-text">סמנו סטטוס שירות, ותועברו מיד למגייס</div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary" onclick="sendStatus('פטור')">פטור</button>
+      <button type="button" class="btn btn-secondary" onclick="sendStatus('מאגר')">מאגר</button>
+      <button type="button" class="btn btn-secondary" onclick="sendStatus('משרת מילואים פעיל')">משרת מילואים פעיל</button>
+      <button type="button" class="btn btn-secondary" onclick="sendStatus('לא יודע/ת')">לא יודע/ת</button>
+      <button type="button" class="btn btn-secondary" onclick="sendStatus('מעבר ללא סימון')">מעבר ללא סימון</button>
     </div>
-    <img src="https://i.ibb.co/0K2WrBp/photo1712774269.jpg" alt="פידבק">
-  </div>
-
-  <div class="modal-container" id="modal-container">
-    <div class="modal-content">
-      למעבר למגייס, לחץ כאן.
-      <button class="modal-button" id="modal-button">מעבר להודעת וואטסאפ למגייס</button>
-    </div>
+    <img src="https://i.ibb.co/vZ55DHD/abc.png" alt="פידבק">
   </div>
 
   <script>
     function getParameterByName(name, url = window.location.href) {
       name = name.replace(/[\[\]]/g, '\\$&');
       const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-      const results = regex.exec(url); // Corrected line
+      const results = regex.exec(url);
       if (!results) return null;
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
-
 
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -153,30 +78,33 @@
     }
 
     const uuid = generateUUID();
-    const countdownElement = document.getElementById('countdown');
-    const whatsappButton = document.getElementById('whatsapp-button');
-    const modalContainer = document.getElementById('modal-container');
-    const modalButton = document.getElementById('modal-button');
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbwj4p8Vxwvwj13fSLoObA-9jOypJzY3CCP44fvH5teAY2zZiA5bJEeBPlEz8m_IN9jn8g/exec';
 
-    let countdown = 10;
-    const countdownInterval = setInterval(() => {
-      countdown -= 1;
-      countdownElement.textContent = countdown;
-      if (countdown === 0) {
-        clearInterval(countdownInterval);
-        modalContainer.style.display = 'flex';
-      }
-    }, 1000);
+    function sendStatus(status) {
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbwj4p8Vxwvwj13fSLoObA-9jOypJzY3CCP44fvH5teAY2zZiA5bJEeBPlEz8m_IN9jn8g/exec';
+      const adNumber = getParameterByName('number').split('?')[0];
+      const now = new Date();
+      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&status=${status}&userContinued=true`;
 
-    whatsappButton.addEventListener('click', () => {
-      updateContinuationStatus();
-      redirectToWhatsapp();
-    });
-    modalButton.addEventListener('click', () => {
-      updateContinuationStatus();
-      redirectToWhatsapp();
-    });
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Data sent successfully');
+          redirectToWhatsapp();
+        } else {
+          console.error('Failed to send data');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
 
     function redirectToWhatsapp() {
       const phoneNumber = getParameterByName('phone');
@@ -186,61 +114,9 @@
       }
     }
 
-    function updateContinuationStatus() {
-      const data = `uuid=${uuid}&userContinued=true`;
-    
-      fetch(webAppUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data,
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Continuation status updated successfully');
-        } else {
-          console.error('Failed to update continuation status');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-
-
-    function sendToGoogleSheet() {
-      const adNumber = getParameterByName('number').split('?')[0];
-      const now = new Date();
-      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-      const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}`;
-
-      console.log('Sending data to Google Sheet:', data); // Add this line
-
-      fetch(webAppUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data,
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Data sent to Google Sheet successfully');
-        } else {
-          console.error('Failed to send data to Google Sheet');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-
     window.addEventListener('load', () => {
-      sendToGoogleSheet();
+      sendStatus('Loaded');
     });
-
   </script>
 </body>
 </html>
