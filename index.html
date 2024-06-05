@@ -20,20 +20,36 @@
       text-align: center;
       color: white;
     }
-    #ad {
-      width: 100%;
-      max-width: 600px;
-      padding: 1rem;
-    }
-    #ad-text {
-      margin-bottom: 1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      box-sizing: border-box;
-      padding: 0 0.5rem;
-    }
+  #ad {
+  width: 100%;
+  max-width: 800px; /* Increased max-width for larger screens */
+  padding: 2rem; /* Increased padding for better spacing */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+#ad-text {
+  font-family: 'Heebo', sans-serif;
+  font-size: 1.2rem; /* Increased font size */
+
+  transition: transform 0.3s ease;
+  transform: scale(1.1);
+  margin-bottom: 1rem;
+  white-space: normal; /* Changed from 'nowrap' to 'normal' */
+  overflow: visible; /* Changed from 'hidden' to 'visible' */
+  text-overflow: unset; /* Removed 'ellipsis' */
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+  line-height: 1.2; /* Added line-height for better spacing */
+}
+
+#ad-text:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7); /* Stronger text shadow on hover */
+}
+
    .responsive-img-container {
       position: relative;
       width: 100%;
@@ -81,6 +97,30 @@
 
     }
 
+.btn-primary {
+  background: linear-gradient(to bottom, #8b9c6c, #6b7b4f); /* Olive green gradient */
+  color: #ffffff; /* White text color */
+  border: 1px solid #5a6640; /* Dark olive green border */
+  border-radius: 6px; /* Slightly rounded corners */
+  padding: 10px 20px; /* Increased padding */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 0.8px; /* Increased letter spacing */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  transition: all 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to bottom, #7a8c5c, #5a6640); /* Slightly darker gradient on hover */
+  color: #ffffff; /* White text color on hover */
+  border-color: #3d4528; /* Darker border color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+  transform: translateY(-2px); /* Subtle upward movement on hover */
+}
+
+
+
+
     #alert-container {
       position: fixed;
       top: 20px;
@@ -111,12 +151,14 @@
       border-color: #f5c6cb;
     }
 
+
+
   </style>
 </head>
 <body>
   <div id="ad">
-    <div id="ad-text">דרושים - למילואים</div>
-    <div id="ad-text">סמנו סטטוס שירות, ותועברו מיד למגייס</div>
+    <div id="ad-title">דרושים - למילואים</div>
+    <div id="ad-text">סמנו סטטוס שירות, ותועברו מיד לוואטסאפ של היחידה המגייסת</div>
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-primary" onclick="sendStatus('idk')">לא יודע/ת</button>
       <button type="button" class="btn btn-primary" onclick="sendStatus('maagar')">מאגר</button>
