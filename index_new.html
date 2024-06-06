@@ -68,14 +68,7 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
-    #alert-container {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      width: 300px;
-    }
+
     .alert {
       text-align: center;
       font-weight: bold;
@@ -94,12 +87,41 @@
     #disclaimer a:hover {
       text-decoration: underline;
     }
+
+    .custom-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      width: 300px;
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+    .custom-alert .btn-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer; /* Add cursor pointer for better UX */
+    }
+    .custom-alert .btn-close:hover {
+      color: white; /* Keep the same color on hover */
+    }
   </style>
 </head>
 <body>
   <div id="ad">
     <div id="ad-title">דרושים - למילואים</div>
-    <div id="ad-text">מלאו את הטופס, והפרטים יועברו לוואטסאפ של המגייס</div>
+    <div id="ad-text">מלאו את הטופס והפרטים יועברו לוואטסאפ של המגייס</div>
     <form id="recruitment-form">
       <div class="mb-3">
         <label for="name" class="form-label">שם מלא</label>
@@ -110,7 +132,7 @@
         <input type="text" class="form-control" id="phone" pattern="[0-9]*" required>
       </div>
       <div class="mb-3">
-        <label for="occupation" class="form-label">מה עושה באזרחות?</label>
+        <label for="occupation" class="form-label">תחום עיסוק אזרחי</label>
         <input type="text" class="form-control" id="occupation" required>
       </div>
       <div class="mb-3">
@@ -158,6 +180,11 @@
       const occupation = document.getElementById('occupation').value;
       const serviceStatus = document.getElementById('serviceStatus').value;
 
+      if (!name || !phone || !occupation || !serviceStatus) {
+        showAlert('danger', 'אנא מלאו את כל השדות');
+        return;
+      }
+
       if (!phone.match(/^[0-9]*$/)) {
         showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
         return;
@@ -176,33 +203,35 @@
       .then(response => {
         if (response.ok) {
           console.log('Data sent successfully');
-          redirectToWhatsapp(phone);
+          redirectToWhatsapp(phone, name, serviceStatus);
         } else {
           console.error('Failed to send data');
-          redirectToWhatsapp(phone);
+          redirectToWhatsapp(phone, name, serviceStatus);
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        redirectToWhatsapp(phone);
+        redirectToWhatsapp(phone, name, serviceStatus);
       });
     }
 
-    function showAlert(type, message) {
-      const alertContainer = document.getElementById('alert-container');
-      const alert = document.createElement('div');
-      alert.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
-      alert.setAttribute('role', 'alert');
-      alert.innerHTML = `
-        <strong>${message}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      `;
-      alertContainer.appendChild(alert);
+function showAlert(type, message) {
+  const alertContainer = document.getElementById('alert-container');
+  const alert = document.createElement('div');
+  alert.classList.add('custom-alert');
+  alert.setAttribute('role', 'alert');
+  alert.innerHTML = `
+    <strong>${message}</strong>
+  `;
+  alertContainer.appendChild(alert);
 
-      setTimeout(() => {
-        alert.remove();
-      }, 3000); // Remove the alert after 3 seconds
-    }
+  // Remove the alert after 3 seconds
+  setTimeout(() => {
+    alert.remove();
+  }, 3000);
+}
+
+
 
     function getUserIP() {
       return fetch('https://api.ipify.org?format=json')
@@ -211,11 +240,10 @@
         .catch(error => console.error(error));
     }
 
-	function redirectToWhatsapp(phone, name, serviceStatus) {
-  	const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatus}`;
-  	window.location.href = whatsappUrl;
+    function redirectToWhatsapp(phone, name, serviceStatus) {
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=+972${phone}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatus}`;
+      window.location.href = whatsappUrl;
     }
-
 
     function sendToGoogleSheet() {
       const adNumber = getParameterByName('number').split('?')[0];
