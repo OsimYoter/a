@@ -30,7 +30,7 @@
       text-align: center;
     }
     #ad-title {
-      font-size: 2rem;
+      font-size: 1rem;
       margin-bottom: 1rem;
       font-weight: bold;
     }
@@ -132,7 +132,7 @@
         <input type="text" class="form-control" id="phone" pattern="[0-9]*" required>
       </div>
       <div class="mb-3">
-        <label for="occupation" class="form-label">תחום עיסוק אזרחי</label>
+        <label for="occupation" class="form-label">מקצוע באזרחות</label>
         <input type="text" class="form-control" id="occupation" required>
       </div>
       <div class="mb-3">
@@ -241,7 +241,10 @@ function showAlert(type, message) {
     }
 
     function redirectToWhatsapp(phone, name, serviceStatus) {
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=+972${phone}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatus}`;
+      const unitPhoneNumber = getParameterByName('phone');
+      const serviceStatusLabel = document.querySelector(`#serviceStatus option[value="${serviceStatus}"]`).innerText;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
       window.location.href = whatsappUrl;
     }
 
