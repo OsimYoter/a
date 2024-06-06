@@ -23,7 +23,7 @@
     #ad {
       width: 100%;
       max-width: 600px;
-      padding: 2rem;
+      padding: 1.5rem;
       background-color: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -36,42 +36,38 @@
     }
     #ad-text {
       font-size: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     .form-label {
-      font-size: 1.2rem;
-      
+      font-size: 1rem;
       margin-bottom: 0.5rem;
     }
     .form-control, .form-select {
-      height: 50px;
-      font-size: 1.2rem;
+      height: 40px;
+      font-size: 1rem;
       text-align: center;
       text-align-last: center;
     }
- button[type="button"] {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #8FBC8F 0%, #98FB98 100%);
-  border: none;
-  color: black; /* Change the text color to black */
-  font-weight: bold; /* Make the text bold */
-  transition: background 0.3s ease;
-}
-button[type="button"]:hover {
-  background: linear-gradient(135deg, #98FB98 0%, #8FBC8F 100%);
-  color: black; /* Ensure the text remains black on hover */
-}
-
-
+    button[type="button"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #8FBC8F 0%, #98FB98 100%);
+      border: none;
+      color: black;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    button[type="button"]:hover {
+      background: linear-gradient(135deg, #98FB98 0%, #8FBC8F 100%);
+      color: black;
+    }
     .military-btn:hover {
       background: linear-gradient(135deg, #3b4422 0%, #4b5320 100%);
       transform: translateY(-2px);
       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
-
     #alert-container {
       position: fixed;
       top: 20px;
@@ -98,14 +94,17 @@ button[type="button"]:hover {
     #disclaimer a:hover {
       text-decoration: underline;
     }
-
   </style>
 </head>
 <body>
   <div id="ad">
     <div id="ad-title">דרושים - למילואים</div>
-    <div id="ad-text">מלאו את הפרטים הבאים:</div>
+    <div id="ad-text">מלאו את הטופס, והפרטים יועברו לוואטסאפ של המגייס</div>
     <form id="recruitment-form">
+      <div class="mb-3">
+        <label for="name" class="form-label">שם מלא</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
       <div class="mb-3">
         <label for="phone" class="form-label">מספר פלאפון</label>
         <input type="text" class="form-control" id="phone" pattern="[0-9]*" required>
@@ -124,13 +123,11 @@ button[type="button"]:hover {
         </select>
       </div>
       <button type="button" class="btn btn-primary military-btn" onclick="submitForm()">מעבר להודעת וואטסאפ עם המגייס</button>
-
       <div id="disclaimer" class="mt-3">
         <small>
-          הפרטים הנשלחים על פי <a href="URL_TO_PRIVACY_POLICY" target="_blank" style="color: #4e73df;">מדיניות הפרטיות</a>.
+          הפרטים הנשלחים על פי <a href="URL_TO_PRIVACY_POLICY" target="_blank">מדיניות הפרטיות</a>.
         </small>
       </div>
-
     </form>
   </div>
   <div id="alert-container"></div>
@@ -156,6 +153,7 @@ button[type="button"]:hover {
     const webAppUrl = 'https://script.google.com/macros/s/AKfycbyMSjH4Fv7CqHY11HriX9Oo68Kn5Ba-_cKmcxbS_EKSrBB0vXrAkcYwmZ0h1k3hjm7H7g/exec';
 
     function submitForm() {
+      const name = document.getElementById('name').value;
       const phone = document.getElementById('phone').value;
       const occupation = document.getElementById('occupation').value;
       const serviceStatus = document.getElementById('serviceStatus').value;
@@ -166,7 +164,7 @@ button[type="button"]:hover {
       }
 
       showAlert('success', 'וואטסאפ תכף ייפתח');
-      const data = `uuid=${uuid}&phone=${phone}&occupation=${occupation}&status=${serviceStatus}&userContinued=true`;
+      const data = `uuid=${uuid}&name=${name}&phone=${phone}&occupation=${occupation}&status=${serviceStatus}&userContinued=true`;
 
       fetch(webAppUrl, {
         method: 'POST',
