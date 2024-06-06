@@ -10,71 +10,54 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Heebo', sans-serif;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
       color: white;
+      direction: rtl;
     }
     #ad {
       width: 100%;
-      max-width: 800px;
+      max-width: 600px;
       padding: 2rem;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      margin-top: 2rem; /* Add this line to move the form down */
-
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      text-align: center;
+    }
+    #ad-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
     }
     #ad-text {
-      font-family: 'Heebo', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .form-label {
       font-size: 1.2rem;
-      transition: transform 0.3s ease;
-      transform: scale(1.1);
-      margin-bottom: 1rem;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: unset;
-      max-width: 100%;
-      box-sizing: border-box;
-      padding: 0 0.5rem;
-      line-height: 1.2;
+      margin-bottom: 0.5rem;
     }
-    #ad-text:hover {
-      transform: scale(1.05);
-      text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
+    .form-control, .form-select {
+      height: 50px;
+      font-size: 1.2rem;
     }
-    .responsive-img-container {
-      position: relative;
+    button[type="button"] {
       width: 100%;
-      height: auto;
-      max-height: 70vh;
-      overflow-y: auto;
-      border: 5px solid white;
+      padding: 0.75rem;
+      font-size: 1.2rem;
       border-radius: 10px;
-      margin-top: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      transition: background 0.3s ease;
     }
-    .responsive-img-container img {
-      width: 100%;
-      height: auto;
-    }
-    .responsive-img-container::-webkit-scrollbar {
-      width: 12px;
-    }
-    .responsive-img-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-    .responsive-img-container::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 10px;
-    }
-    .responsive-img-container::-webkit-scrollbar-thumb:hover {
-      background: #555;
+    button[type="button"]:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
     #alert-container {
       position: fixed;
@@ -89,18 +72,6 @@
       font-weight: bold;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      font-family: inherit;
-      direction: rtl;
-    }
-    .alert-success {
-      background-color: #d4edda;
-      color: #155724;
-      border-color: #c3e6cb;
-    }
-    .alert-danger {
-      background-color: #f8d7da;
-      color: #721c24;
-      border-color: #f5c6cb;
     }
   </style>
 </head>
@@ -129,6 +100,7 @@
       </div>
       <button type="button" class="btn btn-primary" onclick="submitForm()">מעבר למגייס</button>
     </form>
+  </div>
   <div id="alert-container"></div>
   <script>
     function getParameterByName(name, url = window.location.href) {
