@@ -61,10 +61,12 @@ body {
 .form-control.right-aligned {
   text-align: right;
   margin-left: 0.5rem;
+  text-align: center;
 }
 
 .form-control.left-aligned {
   text-align: left;
+  text-align: center;
 }
 
 .profession-input-group {
@@ -164,7 +166,7 @@ button[type="button"]:hover {
     <div id="ad-text">מלאו את הטופס והפרטים יועברו לוואטסאפ של המגייס</div>
     <form id="recruitment-form">
       <input type="text" class="form-control" id="name" placeholder="שם מלא" required>
-      <input type="text" class="form-control" id="phone" placeholder="מספר פלאפון" pattern="[0-9]*" required>
+      <input type="tel" class="form-control" id="phone" placeholder="מספר פלאפון" pattern="[0-9]*" required>
       <div class="profession-input-group">
         <input type="text" class="form-control right-aligned" id="occupation-civilian" placeholder="מקצוע אזרחי" required>
         <input type="text" class="form-control left-aligned" id="occupation-military" placeholder="מקצוע צבאי" required>
