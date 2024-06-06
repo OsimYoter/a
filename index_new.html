@@ -211,10 +211,11 @@
         .catch(error => console.error(error));
     }
 
-    function redirectToWhatsapp(phone) {
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=*%D7%9E.%D7%90:*%0a*%D7%A9%D7%9D+%D7%9E%D7%9C%D7%90:*%0a*%D7%AA%D7%A4%D7%A7%D7%99%D7%93+%D7%9E%D7%91%D7%95%D7%A7%D7%A9:*%0a`;
-      window.location.href = whatsappUrl;
+	function redirectToWhatsapp(phone, name, serviceStatus) {
+  	const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatus}`;
+  	window.location.href = whatsappUrl;
     }
+
 
     function sendToGoogleSheet() {
       const adNumber = getParameterByName('number').split('?')[0];
