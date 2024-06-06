@@ -22,19 +22,31 @@
     }
     #ad {
       width: 100%;
-      max-width: 600px;
-      padding: 1rem;
+      max-width: 800px;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
     #ad-text {
+      font-family: 'Heebo', sans-serif;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      transform: scale(1.1);
       margin-bottom: 1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
       max-width: 100%;
       box-sizing: border-box;
       padding: 0 0.5rem;
+      line-height: 1.2;
     }
-   .responsive-img-container {
+    #ad-text:hover {
+      transform: scale(1.05);
+      text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
+    }
+    .responsive-img-container {
       position: relative;
       width: 100%;
       height: auto;
@@ -62,45 +74,64 @@
     .responsive-img-container::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
-
-    .btn-group {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
+    #alert-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      width: 300px;
     }
-    .btn-group + .btn-group {
-      margin-top: 0.1rem; /* Adjusted top margin for the second button group */
+    .alert {
+      text-align: center;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      font-family: inherit;
+      direction: rtl;
     }
-    .btn {
-      flex: 1;
-      margin: 0.2rem;
-      font-size: 0.9rem;
-      padding: 0.5rem;
-
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
     }
-
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
   </style>
 </head>
 <body>
   <div id="ad">
-    <div id="ad-text">דרושים - למילואים</div>
-    <div id="ad-text">סמנו סטטוס שירות, ותועברו מיד למגייס</div>
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary" onclick="sendStatus('לא יודע/ת')">לא יודע/ת</button>
-      <button type="button" class="btn btn-primary" onclick="sendStatus('מאגר')">מאגר</button>
-      <button type="button" class="btn btn-primary" onclick="sendStatus('פטור')">פטור</button>
-      <button type="button" class="btn btn-primary" onclick="sendStatus('משרת מילואים פעיל')">משרת מילואים פעיל</button>
-    </div>
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary" onclick="sendStatus('מעבר ללא סימון')">מעבר ללא סימון</button>
-    </div>
+    <div id="ad-title">דרושים - למילואים</div>
+    <div id="ad-text">מלאו את הפרטים הבאים:</div>
+    <form id="recruitment-form">
+      <div class="mb-3">
+        <label for="phone" class="form-label">מספר פלאפון</label>
+        <input type="text" class="form-control" id="phone" pattern="[0-9]*" required>
+      </div>
+      <div class="mb-3">
+        <label for="occupation" class="form-label">תחום עיסוק אזרחי</label>
+        <input type="text" class="form-control" id="occupation" required>
+      </div>
+      <div class="mb-3">
+        <label for="serviceStatus" class="form-label">סטטוס שירות</label>
+        <select class="form-select" id="serviceStatus" required>
+          <option value="idk">לא יודע/ת</option>
+          <option value="maagar">מאגר</option>
+          <option value="ptor">פטור</option>
+          <option value="active_mesharet">משרת מילואים פעיל</option>
+          <option value="none">מעבר ללא סימון</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="submitForm()">מעבר למגייס</button>
+    </form>
     <div class="responsive-img-container">
       <img src="https://i.ibb.co/vZ55DHD/abc.png" alt="פידבק">
     </div>
   </div>
-
+  <div id="alert-container"></div>
   <script>
     function getParameterByName(name, url = window.location.href) {
       name = name.replace(/[\[\]]/g, '\\$&');
@@ -120,13 +151,20 @@
     }
 
     const uuid = generateUUID();
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbyMSjH4Fv7CqHY11HriX9Oo68Kn5Ba-_cKmcxbS_EKSrBB0vXrAkcYwmZ0h1k3hjm7H7g/exec';
 
-    function sendStatus(status) {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbxi54FqfR5_C2UXRSR5A-IlvYDP4ek2FP7weFVpKb-CopbbeM8hzCfsNlU2BbJzEWkfvA/exec';
-      const adNumber = getParameterByName('number').split('?')[0];
-      const now = new Date();
-      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&status=${status}&userContinued=true`;
+    function submitForm() {
+      const phone = document.getElementById('phone').value;
+      const occupation = document.getElementById('occupation').value;
+      const serviceStatus = document.getElementById('serviceStatus').value;
+
+      if (!phone.match(/^[0-9]*$/)) {
+        showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
+        return;
+      }
+
+      showAlert('success', 'וואטסאפ תכף ייפתח');
+      const data = `uuid=${uuid}&phone=${phone}&occupation=${occupation}&status=${serviceStatus}&userContinued=true`;
 
       fetch(webAppUrl, {
         method: 'POST',
@@ -138,26 +176,80 @@
       .then(response => {
         if (response.ok) {
           console.log('Data sent successfully');
-          redirectToWhatsapp();
+          redirectToWhatsapp(phone);
         } else {
           console.error('Failed to send data');
+          redirectToWhatsapp(phone);
         }
       })
       .catch(error => {
         console.error('Error:', error);
+        redirectToWhatsapp(phone);
       });
     }
 
-    function redirectToWhatsapp() {
-      const phoneNumber = getParameterByName('phone');
-      if (phoneNumber) {
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=*%D7%9E.%D7%90:*%0a*%D7%A9%D7%9D+%D7%9E%D7%9C%D7%90:*%0a*%D7%AA%D7%A4%D7%A7%D7%99%D7%93+%D7%9E%D7%91%D7%95%D7%A7%D7%A9:*%0a`;
-        window.location.href = whatsappUrl;
-      }
+    function showAlert(type, message) {
+      const alertContainer = document.getElementById('alert-container');
+      const alert = document.createElement('div');
+      alert.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
+      alert.setAttribute('role', 'alert');
+      alert.innerHTML = `
+        <strong>${message}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      alertContainer.appendChild(alert);
+
+      setTimeout(() => {
+        alert.remove();
+      }, 3000); // Remove the alert after 3 seconds
+    }
+
+    function getUserIP() {
+      return fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip)
+        .catch(error => console.error(error));
+    }
+
+    function redirectToWhatsapp(phone) {
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=*%D7%9E.%D7%90:*%0a*%D7%A9%D7%9D+%D7%9E%D7%9C%D7%90:*%0a*%D7%AA%D7%A4%D7%A7%D7%99%D7%93+%D7%9E%D7%91%D7%95%D7%A7%D7%A9:*%0a`;
+      window.location.href = whatsappUrl;
+    }
+
+    function sendToGoogleSheet() {
+      const adNumber = getParameterByName('number').split('?')[0];
+      const now = new Date();
+      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      getUserIP()
+        .then(userIP => {
+          const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&userIP=${userIP}`;
+
+          fetch(webAppUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: data,
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('success');
+            } else {
+              console.error('failed');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        })
+        .catch(error => {
+          console.error('Error getting user IP:', error);
+        });
     }
 
     window.addEventListener('load', () => {
-      sendStatus('Loaded');
+      sendToGoogleSheet();
     });
   </script>
 </body>
