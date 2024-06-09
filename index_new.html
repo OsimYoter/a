@@ -210,47 +210,55 @@ button[type="button"]:hover {
     const uuid = generateUUID();
     const webAppUrl = 'https://script.google.com/macros/s/AKfycbwTykRvY44n6cfbqwzL3DXhxY7ovSYOECveUz9ESnhfenr95kYe_v518jqhAFWD-xzROg/exec';
 
-    function submitForm() {
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const occupationCivilian = document.getElementById('occupation-civilian').value;
-      const occupationMilitary = document.getElementById('occupation-military').value;
-      const serviceStatus = document.getElementById('serviceStatus').value;
+  function submitForm() {
+    const submitButton = document.querySelector('button[type="button"]');
+    submitButton.disabled = true; // Disable the button
 
-      if (!name || !phone || !occupationCivilian || !occupationMilitary || !serviceStatus) {
-        showAlert('danger', 'אנא מלאו את כל השדות');
-        return;
-      }
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const occupationCivilian = document.getElementById('occupation-civilian').value;
+    const occupationMilitary = document.getElementById('occupation-military').value;
+    const serviceStatus = document.getElementById('serviceStatus').value;
 
-      if (!phone.match(/^[0-9]*$/)) {
-        showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
-        return;
-      }
-
-      showAlert('success', 'וואטסאפ תכף ייפתח');
-      const data = `uuid=${uuid}&name=${name}&phone=${phone}&occupationCivilian=${occupationCivilian}&occupationMilitary=${occupationMilitary}&status=${serviceStatus}&userContinued=true`;
-
-      fetch(webAppUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data,
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log('Data sent successfully');
-          redirectToWhatsapp(phone, name, serviceStatus);
-        } else {
-          console.error('Failed to send data');
-          redirectToWhatsapp(phone, name, serviceStatus);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        redirectToWhatsapp(phone, name, serviceStatus);
-      });
+    if (!name || !phone || !occupationCivilian || !occupationMilitary || !serviceStatus) {
+      showAlert('danger', 'אנא מלאו את כל השדות');
+      submitButton.disabled = false; // Re-enable the button if validation fails
+      return;
     }
+
+    if (!phone.match(/^[0-9]*$/)) {
+      showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
+      submitButton.disabled = false; // Re-enable the button if validation fails
+      return;
+    }
+
+    showAlert('success', 'וואטסאפ תכף ייפתח');
+    const data = `uuid=${uuid}&name=${name}&phone=${phone}&occupationCivilian=${occupationCivilian}&occupationMilitary=${occupationMilitary}&status=${serviceStatus}&userContinued=true`;
+
+    fetch(webAppUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data,
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Data sent successfully');
+        redirectToWhatsapp(phone, name, serviceStatus);
+      } else {
+        console.error('Failed to send data');
+        redirectToWhatsapp(phone, name, serviceStatus);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      redirectToWhatsapp(phone, name, serviceStatus);
+    })
+    .finally(() => {
+      submitButton.disabled = false; // Re-enable the button after submission attempt
+    });
+  }
 
     function showAlert(type, message) {
       const alertContainer = document.getElementById('alert-container');
