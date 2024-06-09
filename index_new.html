@@ -234,6 +234,7 @@ button[type="button"]:hover {
 
     showAlert('success', 'וואטסאפ תכף ייפתח');
     const data = `uuid=${uuid}&name=${name}&phone=${phone}&occupationCivilian=${occupationCivilian}&occupationMilitary=${occupationMilitary}&status=${serviceStatus}&userContinued=true`;
+    console.log('Data being sent:', data);
 
     fetch(webAppUrl, {
       method: 'POST',
@@ -298,6 +299,7 @@ button[type="button"]:hover {
       getUserIP()
         .then(userIP => {
           const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&userIP=${userIP}`;
+          console.log('Data being sent:', data);
 
           fetch(webAppUrl, {
             method: 'POST',
