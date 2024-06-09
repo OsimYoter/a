@@ -213,29 +213,31 @@ button[type="button"]:hover {
   function submitForm() {
     const submitButton = document.querySelector('button[type="button"]');
     submitButton.disabled = true; // Disable the button
-
+  
     const name = document.getElementById('name').value;
     const phone = document.getElementById('phone').value;
     const occupationCivilian = document.getElementById('occupation-civilian').value;
     const occupationMilitary = document.getElementById('occupation-military').value;
     const serviceStatus = document.getElementById('serviceStatus').value;
-
+  
     if (!name || !phone || !occupationCivilian || !occupationMilitary || !serviceStatus) {
       showAlert('danger', 'אנא מלאו את כל השדות');
       submitButton.disabled = false; // Re-enable the button if validation fails
       return;
     }
-
+  
     if (!phone.match(/^[0-9]*$/)) {
       showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
       submitButton.disabled = false; // Re-enable the button if validation fails
       return;
     }
-
+  
     showAlert('success', 'וואטסאפ תכף ייפתח');
-    const data = `uuid=${uuid}&name=${name}&phone=${phone}&occupationCivilian=${occupationCivilian}&occupationMilitary=${occupationMilitary}&status=${serviceStatus}&userContinued=true`;
+    const data = `uuid=${encodeURIComponent(uuid)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&occupationCivilian=${encodeURIComponent(occupationCivilian)}&occupationMilitary=${encodeURIComponent(occupationMilitary)}&status=${encodeURIComponent(serviceStatus)}&userContinued=true`;
+  
+    // Log the data to the console
     console.log('Data being sent:', data);
-
+  
     fetch(webAppUrl, {
       method: 'POST',
       headers: {
@@ -260,6 +262,7 @@ button[type="button"]:hover {
       submitButton.disabled = false; // Re-enable the button after submission attempt
     });
   }
+
 
     function showAlert(type, message) {
       const alertContainer = document.getElementById('alert-container');
