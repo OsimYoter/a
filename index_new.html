@@ -236,7 +236,7 @@ button[type="button"]:hover {
     const data = `uuid=${encodeURIComponent(uuid)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&occupationCivilian=${encodeURIComponent(occupationCivilian)}&occupationMilitary=${encodeURIComponent(occupationMilitary)}&status=${encodeURIComponent(serviceStatus)}&userContinued=true`;
   
     // Log the data to the console
-    console.log('Data being sent:', data);
+    //console.log('Data being sent:', data);
   
     fetch(webAppUrl, {
       method: 'POST',
@@ -302,7 +302,7 @@ button[type="button"]:hover {
       getUserIP()
         .then(userIP => {
           const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&userIP=${userIP}`;
-          console.log('Data being sent:', data);
+          //console.log('Data being sent:', data);
 
           fetch(webAppUrl, {
             method: 'POST',
