@@ -248,15 +248,15 @@ button[type="button"]:hover {
     .then(response => {
       if (response.ok) {
         console.log('Data sent successfully');
-        redirectToWhatsapp(phone, name, serviceStatus);
+        redirectToWhatsapp(phone, name, serviceStatus, occupationMilitary);
       } else {
         console.error('Failed to send data');
-        redirectToWhatsapp(phone, name, serviceStatus);
+        redirectToWhatsapp(phone, name, serviceStatus, occupationMilitary);
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      redirectToWhatsapp(phone, name, serviceStatus);
+      redirectToWhatsapp(phone, name, serviceStatus, occupationMilitary);
     })
     .finally(() => {
       submitButton.disabled = false; // Re-enable the button after submission attempt
@@ -286,11 +286,11 @@ button[type="button"]:hover {
         .catch(error => console.error(error));
     }
 
-    function redirectToWhatsapp(phone, name, serviceStatus) {
+    function redirectToWhatsapp(phone, name, serviceStatus, occupationMilitary) {
       const unitPhoneNumber = getParameterByName('phone');
       const serviceStatusLabel = document.querySelector(`#serviceStatus option[value="${serviceStatus}"]`).innerText;
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}%0a*מקצוע צבאי:* ${occupationMilitary}`;
       window.location.href = whatsappUrl;
     }
 
