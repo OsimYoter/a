@@ -183,14 +183,20 @@ button[type="button"]:hover {
       </button>
       <div id="disclaimer" class="mt-3">
         <small>
-          פרטיכם יישלחו בהתאם ל<a href="https://osimyoter.github.io/a/pp" target="_blank">מדיניות הפרטיות</a>.
+          פרטיכם יישלחו בהתאם ל<a href="https://osimyoter.co.il/pp" target="_blank">מדיניות הפרטיות</a>.
         </small>
       </div>
     </form>
   </div>
   <div id="alert-container"></div>
   <script>
+
+    function decodeURL(url) {
+      return url.replace(/%3F/g, '?').replace(/%3D/g, '=');
+    }
+
     function getParameterByName(name, url = window.location.href) {
+      url = decodeURL(url); // Decode the URL first
       name = name.replace(/[\[\]]/g, '\\$&');
       const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
       const results = regex.exec(url);
@@ -199,6 +205,7 @@ button[type="button"]:hover {
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
+
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         const r = Math.random() * 16 | 0,
@@ -206,6 +213,14 @@ button[type="button"]:hover {
         return v.toString(16);
       });
     }
+
+    function extractFourDigits(adNumber) {
+      // if string includes wa, tg, then replace it with empty string. like tg1234, should be 1234
+      adNumber = adNumber.replace(/(wa|tg)/g, '');
+      // then check if what is left is 4 digits. if it is, return it. if not, return null
+      return adNumber.match(/\d{4}/) ? adNumber.match(/\d{4}/)[0] : null;
+    }
+
 
     const uuid = generateUUID();
     const webAppUrl = 'https://script.google.com/macros/s/AKfycbzhKjOUNx5ltP0tzX-BiU-d1UylPvuMXHecwddrVOce0--7xDrMpTo4LJK9CSQ-9vSWOg/exec';
@@ -286,16 +301,27 @@ button[type="button"]:hover {
         .catch(error => console.error(error));
     }
 
+
     function redirectToWhatsapp(phone, name, serviceStatus) {
       const unitPhoneNumber = getParameterByName('phone');
       const serviceStatusLabel = document.querySelector(`#serviceStatus option[value="${serviceStatus}"]`).innerText;
+      const adNumber = getParameterByName('number').split('?')[0];
+      const extractedAdNumber = extractFourDigits(adNumber); // Extract 4 digits
+      console.log('extractedAdNumber:', extractedAdNumber);
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
+      let whatsappMessage = `*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
+      if (extractedAdNumber) {
+        whatsappMessage += `%0a*מספר מודעה:* ${extractedAdNumber}`;
+      }
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=${whatsappMessage}`;
       window.location.href = whatsappUrl;
     }
 
+
     function sendToGoogleSheet() {
       const adNumber = getParameterByName('number').split('?')[0];
+      const extractedAdNumber = extractFourDigits(adNumber); // Extract 4 digits from the ad number
       const now = new Date();
       const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
