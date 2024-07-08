@@ -309,10 +309,12 @@ button[type="button"]:hover {
       const extractedAdNumber = extractFourDigits(adNumber); // Extract 4 digits
       console.log('extractedAdNumber:', extractedAdNumber);
 
-      let whatsappMessage = `*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
+      let whatsappMessage = `שלום, אני פונה אליכם בהמשך למודעת הגיוס שפרסמתם בקהילת דרושים - למילואים.%0a%0a`;
+      whatsappMessage += `*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
       if (extractedAdNumber) {
         whatsappMessage += `%0a*מספר מודעה:* ${extractedAdNumber}`;
       }
+      whatsappMessage += `%0a%0aאשמח לשתף פרטים נוספים ככל שיידרש.`;
 
       const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=${whatsappMessage}`;
       window.location.href = whatsappUrl;
