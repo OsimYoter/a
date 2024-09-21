@@ -168,34 +168,36 @@
         </div>
     </div>
     <div id="alert-container"></div>
-
+    
     <script>
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbxQqXi1UAZViOoUXQWfSU11aPCLYcTZ91VEFKExx-ey0ninroPEVZEjwTY5lhYn0rGzKQ/exec';
-
+    
+        function resetButton(button) {
+            button.innerHTML = 'המשך לשיחת וואטסאפ עם "כח אבטחה" <i class="fab fa-whatsapp"></i>';
+            button.style.background = "linear-gradient(135deg, #25D366 0%, #128C7E 100%)"; // Original background
+        }
+    
         function showAlert(type, message) {
             const alertContainer = document.getElementById('alert-container');
             const alert = document.createElement('div');
-            alert.classList.add('custom-alert', `alert-${type}`);
-            alert.textContent = message;
+            alert.classList.add('custom-alert');
+            alert.classList.add(`alert-${type}`);
+            alert.innerHTML = `<strong>${message}</strong>`;
             alertContainer.appendChild(alert);
-
+    
             setTimeout(() => {
                 alert.remove();
             }, 3000);
         }
-
-        document.getElementById('trainingLevel').addEventListener('change', function() {
-            const otherTraining = document.getElementById('otherTraining');
-            otherTraining.style.display = this.value === 'אחר' ? 'block' : 'none';
-            otherTraining.required = this.value === 'אחר';
-        });
-
-        function formatTimestamp(date) {
-            const pad = (n) => n.toString().padStart(2, '0');
-            return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        }
-
+    
         function submitForm() {
+            const submitButton = document.getElementById('submit-btn');
+            submitButton.disabled = true;
+    
+            // Change button text and background color
+            submitButton.textContent = "תכף תועברו למגייס. אנא המתינו...";
+            submitButton.style.background = "lightcoral"; // Change to light red
+    
             const fullName = document.getElementById('fullName').value;
             const city = document.getElementById('city').value;
             const lastJob = document.getElementById('lastJob').value;
@@ -203,25 +205,25 @@
             const trainingLevel = document.getElementById('trainingLevel').value;
             const otherTraining = document.getElementById('otherTraining').value;
             const desiredRole = document.getElementById('desiredRole').value;
-
-            // Basic validation checks
+    
+            // Check for empty fields
             if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
                 showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
+                submitButton.disabled = false;
+                resetButton(submitButton);
                 return;
             }
-
+    
+            // Check phone validity
             if (!phone.match(/^[0-9]*$/)) {
                 showAlert('danger', 'אנא הכניסו מספר טלפון תקין');
+                submitButton.disabled = false;
+                resetButton(submitButton);
                 return;
             }
-
-            const checkboxes = ['fullMilitaryService', 'rifleman', 'combatCertificate', 'cleanRecord', 'mobile', 'healthyStatus'];
-            const relevantItems = checkboxes.filter(id => document.getElementById(id).checked);
-
-            const timestamp = formatTimestamp(new Date());
-
+    
+            // Prepare form data for Google Sheets
             const formData = {
-                timestamp: timestamp,
                 fullName: fullName,
                 city: city,
                 lastJob: lastJob,
@@ -235,53 +237,61 @@
                 mobile: document.getElementById('mobile').checked,
                 healthyStatus: document.getElementById('healthyStatus').checked
             };
-
+    
+            // Format WhatsApp message
             const whatsappMessage = `
-        שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
-
-        *זמן מילוי הטופס:* ${timestamp}
-        *שם מלא:* ${fullName}
-        *יישוב מגורים:* ${city}
-        *מקום ותפקיד עבודה אחרון:* ${lastJob}
-        *טלפון:* ${phone}
-        *רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
-        *תפקיד רצוי:* ${desiredRole}
-
-        *פרטים נוספים:*
-        ${checkboxes.map(item => `${document.getElementById(item).checked ? '✅' : '❌'} ${document.querySelector(`label[for="${item}"]`).textContent.trim()}`).join('\n')}
-
-        אשמח לקבל מידע נוסף ולהמשיך בתהליך.
+    שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
+    *שם מלא:* ${fullName}
+    *יישוב מגורים:* ${city}
+    *מקום ותפקיד עבודה אחרון:* ${lastJob}
+    *טלפון:* ${phone}
+    *רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
+    *תפקיד רצוי:* ${desiredRole}
+    
+    *פרטים נוספים:*
+    ${document.getElementById('fullMilitaryService').checked ? '✅ שירות צבאי מלא' : '❌ שירות צבאי מלא'}
+    ${document.getElementById('rifleman').checked ? '✅ רובאי 02 ומעלה' : '❌ רובאי 02 ומעלה'}
+    ${document.getElementById('combatCertificate').checked ? '✅ בעל תעודת לוחם' : '❌ בעל תעודת לוחם'}
+    ${document.getElementById('cleanRecord').checked ? '✅ עבר ללא דופי' : '❌ עבר ללא דופי'}
+    ${document.getElementById('mobile').checked ? '✅ נייד (אופנוע/רכב)' : '❌ נייד (אופנוע/רכב)'}
+    ${document.getElementById('healthyStatus').checked ? '✅ בריאות תקינה' : '❌ בריאות תקינה'}
             `.trim();
-
+    
             const encodedMessage = encodeURIComponent(whatsappMessage);
             const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
-
-            // Log the form data before sending it
-            console.log('Form data:', formData);
-
-            // Send data to Google Sheets
+    
+            // Send form data to Google Sheets
+            const data = new URLSearchParams(formData).toString();
+    
             fetch(webAppUrl, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(formData)
+                body: data
             })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form data sent successfully');
+                    showAlert('success', 'וואטסאפ תכף ייפתח, המתינו בסבלנות');
+                    window.location.href = whatsappUrl; // Redirect to WhatsApp
+                } else {
+                    console.error('Failed to send data');
+                    window.location.href = whatsappUrl; // Redirect to WhatsApp anyway
                 }
-                console.log('Form data sent successfully');
-                window.location.href = whatsappUrl;
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error:', error);
-                showAlert('danger', 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר.');
+                window.location.href = whatsappUrl; // Redirect to WhatsApp on failure
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                resetButton(submitButton);
             });
         }
-
-        
     </script>
+    
 
+    
 </body>
 </html>
