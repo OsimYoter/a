@@ -168,7 +168,7 @@
         </div>
     </div>
     <div id="alert-container"></div>
-    
+
     <script>
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbxQqXi1UAZViOoUXQWfSU11aPCLYcTZ91VEFKExx-ey0ninroPEVZEjwTY5lhYn0rGzKQ/exec';
     
@@ -189,106 +189,110 @@
                 alert.remove();
             }, 3000);
         }
-    
         function submitForm() {
-            const submitButton = document.getElementById('submit-btn');
-            submitButton.disabled = true;
-    
-            // Change button text and background color
-            submitButton.textContent = "תכף תועברו למגייס. אנא המתינו...";
-            submitButton.style.background = "lightcoral"; // Change to light red
-    
-            const fullName = document.getElementById('fullName').value;
-            const city = document.getElementById('city').value;
-            const lastJob = document.getElementById('lastJob').value;
-            const phone = document.getElementById('phone').value;
-            const trainingLevel = document.getElementById('trainingLevel').value;
-            const otherTraining = document.getElementById('otherTraining').value;
-            const desiredRole = document.getElementById('desiredRole').value;
-    
-            // Check for empty fields
-            if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
-                showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
-                submitButton.disabled = false;
-                resetButton(submitButton);
-                return;
-            }
-    
-            // Check phone validity
-            if (!phone.match(/^[0-9]*$/)) {
-                showAlert('danger', 'אנא הכניסו מספר טלפון תקין');
-                submitButton.disabled = false;
-                resetButton(submitButton);
-                return;
-            }
-    
-            // Prepare form data for Google Sheets
-            const formData = {
-                fullName: fullName,
-                city: city,
-                lastJob: lastJob,
-                phone: phone,
-                trainingLevel: trainingLevel === 'אחר' ? otherTraining : trainingLevel,
-                desiredRole: desiredRole,
-                fullMilitaryService: document.getElementById('fullMilitaryService').checked,
-                rifleman: document.getElementById('rifleman').checked,
-                combatCertificate: document.getElementById('combatCertificate').checked,
-                cleanRecord: document.getElementById('cleanRecord').checked,
-                mobile: document.getElementById('mobile').checked,
-                healthyStatus: document.getElementById('healthyStatus').checked
-            };
-    
-            // Format WhatsApp message
-            const whatsappMessage = `
-    שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
-    *שם מלא:* ${fullName}
-    *יישוב מגורים:* ${city}
-    *מקום ותפקיד עבודה אחרון:* ${lastJob}
-    *טלפון:* ${phone}
-    *רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
-    *תפקיד רצוי:* ${desiredRole}
-    
-    *פרטים נוספים:*
-    ${document.getElementById('fullMilitaryService').checked ? '✅ שירות צבאי מלא' : '❌ שירות צבאי מלא'}
-    ${document.getElementById('rifleman').checked ? '✅ רובאי 02 ומעלה' : '❌ רובאי 02 ומעלה'}
-    ${document.getElementById('combatCertificate').checked ? '✅ בעל תעודת לוחם' : '❌ בעל תעודת לוחם'}
-    ${document.getElementById('cleanRecord').checked ? '✅ עבר ללא דופי' : '❌ עבר ללא דופי'}
-    ${document.getElementById('mobile').checked ? '✅ נייד (אופנוע/רכב)' : '❌ נייד (אופנוע/רכב)'}
-    ${document.getElementById('healthyStatus').checked ? '✅ בריאות תקינה' : '❌ בריאות תקינה'}
-            `.trim();
-    
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
-    
-            // Send form data to Google Sheets
-            const data = new URLSearchParams(formData).toString();
-    
-            fetch(webAppUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: data
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Form data sent successfully');
-                    showAlert('success', 'וואטסאפ תכף ייפתח, המתינו בסבלנות');
-                    window.location.href = whatsappUrl; // Redirect to WhatsApp
-                } else {
-                    console.error('Failed to send data');
-                    window.location.href = whatsappUrl; // Redirect to WhatsApp anyway
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                window.location.href = whatsappUrl; // Redirect to WhatsApp on failure
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                resetButton(submitButton);
-            });
+    const submitButton = document.getElementById('submit-btn');
+    submitButton.disabled = true;
+
+    // Change button text and background color
+    submitButton.textContent = "תכף תועברו למגייס. אנא המתינו...";
+    submitButton.style.background = "lightcoral"; // Change to light red
+
+    const fullName = document.getElementById('fullName').value;
+    const city = document.getElementById('city').value;
+    const lastJob = document.getElementById('lastJob').value;
+    const phone = document.getElementById('phone').value;
+    const trainingLevel = document.getElementById('trainingLevel').value;
+    const otherTraining = document.getElementById('otherTraining').value;
+    const desiredRole = document.getElementById('desiredRole').value;
+
+    // Check for empty fields
+    if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
+        showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
+        submitButton.disabled = false;
+        resetButton(submitButton);
+        return;
+    }
+
+    // Check phone validity
+    if (!phone.match(/^[0-9]*$/)) {
+        showAlert('danger', 'אנא הכניסו מספר טלפון תקין');
+        submitButton.disabled = false;
+        resetButton(submitButton);
+        return;
+    }
+
+    // Prepare form data for Google Sheets
+    const formData = {
+        fullName: fullName,
+        city: city,
+        lastJob: lastJob,
+        phone: phone,
+        trainingLevel: trainingLevel === 'אחר' ? otherTraining : trainingLevel,
+        desiredRole: desiredRole,
+        fullMilitaryService: document.getElementById('fullMilitaryService').checked,
+        rifleman: document.getElementById('rifleman').checked,
+        combatCertificate: document.getElementById('combatCertificate').checked,
+        cleanRecord: document.getElementById('cleanRecord').checked,
+        mobile: document.getElementById('mobile').checked,
+        healthyStatus: document.getElementById('healthyStatus').checked
+    };
+
+    // Prepare WhatsApp message with checkboxes' state and labels
+    const checkboxes = ['fullMilitaryService', 'rifleman', 'combatCertificate', 'cleanRecord', 'mobile', 'healthyStatus'];
+    const whatsappMessage = `
+שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
+*שם מלא:* ${fullName}
+*יישוב מגורים:* ${city}
+*מקום ותפקיד עבודה אחרון:* ${lastJob}
+*טלפון:* ${phone}
+*רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
+*תפקיד רצוי:* ${desiredRole}
+
+*פרטים נוספים:*
+${checkboxes.map(item => {
+    const checkboxElement = document.getElementById(item);
+    const labelText = checkboxElement.parentElement.textContent.trim(); // Get label text from parent
+    return `${checkboxElement.checked ? '✅' : '❌'} ${labelText}`;
+}).join('\n')}
+        `.trim();
+
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
+
+    // Send form data to Google Sheets
+    const data = new URLSearchParams(formData).toString();
+
+    fetch(webAppUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Form data sent successfully');
+            showAlert('success', 'וואטסאפ תכף ייפתח, המתינו בסבלנות');
+            window.location.href = whatsappUrl; // Redirect to WhatsApp
+        } else {
+            console.error('Failed to send data');
+            window.location.href = whatsappUrl; // Redirect to WhatsApp anyway
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        window.location.href = whatsappUrl; // Redirect to WhatsApp on failure
+    })
+    .finally(() => {
+        submitButton.disabled = false;
+        resetButton(submitButton);
+    });
+}
+
+        
+        
+
+
     </script>
     
 
