@@ -204,6 +204,7 @@
             const otherTraining = document.getElementById('otherTraining').value;
             const desiredRole = document.getElementById('desiredRole').value;
 
+            // Basic validation checks
             if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
                 showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
                 return;
@@ -236,35 +237,40 @@
             };
 
             const whatsappMessage = `
-שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
+        שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
 
-*זמן מילוי הטופס:* ${timestamp}
-*שם מלא:* ${fullName}
-*יישוב מגורים:* ${city}
-*מקום ותפקיד עבודה אחרון:* ${lastJob}
-*טלפון:* ${phone}
-*רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
-*תפקיד רצוי:* ${desiredRole}
+        *זמן מילוי הטופס:* ${timestamp}
+        *שם מלא:* ${fullName}
+        *יישוב מגורים:* ${city}
+        *מקום ותפקיד עבודה אחרון:* ${lastJob}
+        *טלפון:* ${phone}
+        *רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
+        *תפקיד רצוי:* ${desiredRole}
 
-*פרטים נוספים:*
-${checkboxes.map(item => `${document.getElementById(item).checked ? '✅' : '❌'} ${document.querySelector(`label[for="${item}"]`).textContent.trim()}`).join('\n')}
+        *פרטים נוספים:*
+        ${checkboxes.map(item => `${document.getElementById(item).checked ? '✅' : '❌'} ${document.querySelector(`label[for="${item}"]`).textContent.trim()}`).join('\n')}
 
-אשמח לקבל מידע נוסף ולהמשיך בתהליך.
+        אשמח לקבל מידע נוסף ולהמשיך בתהליך.
             `.trim();
 
             const encodedMessage = encodeURIComponent(whatsappMessage);
             const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
 
+            // Log the form data before sending it
+            console.log('Form data:', formData);
+
             // Send data to Google Sheets
             fetch(webAppUrl, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData)
             })
-            .then(() => {
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 console.log('Form data sent successfully');
                 window.location.href = whatsappUrl;
             })
@@ -273,6 +279,8 @@ ${checkboxes.map(item => `${document.getElementById(item).checked ? '✅' : '❌
                 showAlert('danger', 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר.');
             });
         }
+
+        
     </script>
 
 </body>
