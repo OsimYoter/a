@@ -41,7 +41,7 @@
             border-radius: 10px;
             text-align: center; /* Add this line to center the text */
         }
-        
+
         .form-select {
             text-align-last: center; /* Add this line to center the text in dropdowns */
         }
@@ -170,7 +170,7 @@
     <div id="alert-container"></div>
 
     <script>
-        const webAppUrl = 'https://script.google.com/macros/s/AKfycbzhKjOUNx5ltP0tzX-BiU-d1UylPvuMXHecwddrVOce0--7xDrMpTo4LJK9CSQ-9vSWOg/exec';
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbxQqXi1UAZViOoUXQWfSU11aPCLYcTZ91VEFKExx-ey0ninroPEVZEjwTY5lhYn0rGzKQ/exec';
 
         function showAlert(type, message) {
             const alertContainer = document.getElementById('alert-container');
@@ -189,6 +189,11 @@
             otherTraining.style.display = this.value === 'אחר' ? 'block' : 'none';
             otherTraining.required = this.value === 'אחר';
         });
+
+        function formatTimestamp(date) {
+            const pad = (n) => n.toString().padStart(2, '0');
+            return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        }
 
         function submitForm() {
             const fullName = document.getElementById('fullName').value;
@@ -212,9 +217,28 @@
             const checkboxes = ['fullMilitaryService', 'rifleman', 'combatCertificate', 'cleanRecord', 'mobile', 'healthyStatus'];
             const relevantItems = checkboxes.filter(id => document.getElementById(id).checked);
 
+            const timestamp = formatTimestamp(new Date());
+
+            const formData = {
+                timestamp: timestamp,
+                fullName: fullName,
+                city: city,
+                lastJob: lastJob,
+                phone: phone,
+                trainingLevel: trainingLevel === 'אחר' ? otherTraining : trainingLevel,
+                desiredRole: desiredRole,
+                fullMilitaryService: document.getElementById('fullMilitaryService').checked,
+                rifleman: document.getElementById('rifleman').checked,
+                combatCertificate: document.getElementById('combatCertificate').checked,
+                cleanRecord: document.getElementById('cleanRecord').checked,
+                mobile: document.getElementById('mobile').checked,
+                healthyStatus: document.getElementById('healthyStatus').checked
+            };
+
             const whatsappMessage = `
 שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
 
+*זמן מילוי הטופס:* ${timestamp}
 *שם מלא:* ${fullName}
 *יישוב מגורים:* ${city}
 *מקום ותפקיד עבודה אחרון:* ${lastJob}
@@ -223,7 +247,7 @@
 *תפקיד רצוי:* ${desiredRole}
 
 *פרטים נוספים:*
-${relevantItems.map(item => `✅ ${document.querySelector(`label[for="${item}"]`).textContent.trim()}`).join('\n')}
+${checkboxes.map(item => `${document.getElementById(item).checked ? '✅' : '❌'} ${document.querySelector(`label[for="${item}"]`).textContent.trim()}`).join('\n')}
 
 אשמח לקבל מידע נוסף ולהמשיך בתהליך.
             `.trim();
@@ -232,22 +256,16 @@ ${relevantItems.map(item => `✅ ${document.querySelector(`label[for="${item}"]`
             const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
 
             // Send data to Google Sheets
-            const formData = new FormData();
-            formData.append('fullName', fullName);
-            formData.append('city', city);
-            formData.append('lastJob', lastJob);
-            formData.append('phone', phone);
-            formData.append('trainingLevel', trainingLevel === 'אחר' ? otherTraining : trainingLevel);
-            formData.append('desiredRole', desiredRole);
-            formData.append('relevantItems', relevantItems.join(', '));
-
             fetch(webAppUrl, {
                 method: 'POST',
-                body: formData
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
+            .then(() => {
+                console.log('Form data sent successfully');
                 window.location.href = whatsappUrl;
             })
             .catch((error) => {
@@ -256,5 +274,6 @@ ${relevantItems.map(item => `✅ ${document.querySelector(`label[for="${item}"]`
             });
         }
     </script>
+
 </body>
 </html>
