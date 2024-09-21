@@ -191,15 +191,15 @@
         }
 
         document.getElementById('trainingLevel').addEventListener('change', function() {
-    const otherTraining = document.getElementById('otherTraining');
-    if (this.value === 'אחר') {
-        otherTraining.style.display = 'block';
-        otherTraining.required = true;  // Make it required when 'אחר' is selected
-    } else {
-        otherTraining.style.display = 'none';
-        otherTraining.required = false; // Make it not required when other options are selected
-    }
-});
+            const otherTraining = document.getElementById('otherTraining');
+            if (this.value === 'אחר') {
+                otherTraining.style.display = 'block';
+                otherTraining.required = true;  // Make it required when 'אחר' is selected
+            } else {
+                otherTraining.style.display = 'none';
+                otherTraining.required = false; // Make it not required when other options are selected
+            }
+        });
 
 function submitForm() {
     const submitButton = document.getElementById('submit-btn');
