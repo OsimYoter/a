@@ -66,7 +66,7 @@
             padding: 0.75rem;
             font-size: 1.1rem;
             border-radius: 10px;
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            background: linear-gradient(135deg, #FFD700 0%, #000000 100%); /* Blend of yellow and black */
             border: none;
             color: white;
             font-weight: bold;
@@ -78,10 +78,11 @@
         }
 
         #submit-btn:hover {
-            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+            background: linear-gradient(135deg, #000000 0%, #FFD700 100%); /* Reverse blend on hover */
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
 
         #disclaimer {
             color: #d1d1d1;
@@ -160,7 +161,7 @@
                 <label><input type="checkbox" id="healthyStatus"> בריאות תקינה</label>
             </div>
             <button type="button" id="submit-btn" onclick="submitForm()">
-                המשך לשיחת וואטסאפ עם "כח אבטחה" <i class="fab fa-whatsapp"></i>
+                המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>
             </button>
         </form>
         <div id="disclaimer">
@@ -173,7 +174,7 @@
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbxift61QkmdlrbTXi18Jt8vmCfJhg76xs4yF0SYmsKU3Cz9If79iaknwYhZ8738R9SgJA/exec';
     
         function resetButton(button) {
-            button.innerHTML = 'המשך לשיחת וואטסאפ עם "כח אבטחה" <i class="fab fa-whatsapp"></i>';
+            button.innerHTML = 'המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>';
             button.style.background = "linear-gradient(135deg, #25D366 0%, #128C7E 100%)"; // Original background
         }
     
