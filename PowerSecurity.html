@@ -32,12 +32,14 @@
         }
 
         .logo {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 100px;
-            height: auto;
-        }
+    position: absolute;
+    top: -18px; /* Move the logo further up */
+    right: -18px; /* Move the logo further right */
+    width: 130px; /* Keep the new larger size */
+    height: auto;
+    z-index: 10; /* Ensure it stays on top but doesn't overlap */
+}
+
 
         .background-image {
             position: absolute;
@@ -52,7 +54,7 @@
 
 
         .form-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-bottom: 1.5rem;
             text-align: center;
             font-weight: bold;
