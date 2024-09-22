@@ -144,6 +144,20 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        .form-row {
+            display: flex;
+            flex-wrap: nowrap;
+            margin-bottom: 1rem;
+        }
+        .form-col {
+            flex: 1;
+            padding: 0 5px;
+        }
+        .form-control {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -152,19 +166,19 @@
         <img src="https://github.com/OsimYoter/a/blob/gh-pages/bg_lion.jpg?raw=true" alt="Background" class="background-image">
         <h1 class="form-title">מלאו את הטופס הבא ותועברו לשיחת וואטסאפ עם נציג מחברת כח אבטחה</h1>
         <form id="recruitment-form">
-            <div class="row">
-                <div class="col-md-6">
+            <div class="form-row">
+                <div class="form-col">
                     <input type="text" class="form-control" id="fullName" placeholder="שם מלא" required>
                 </div>
-                <div class="col-md-6">
+                <div class="form-col">
                     <input type="text" class="form-control" id="city" placeholder="יישוב מגורים" required>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="form-row">
+                <div class="form-col">
                     <input type="text" class="form-control" id="lastJob" placeholder="מקום ותפקיד עבודה אחרון" required>
                 </div>
-                <div class="col-md-6">
+                <div class="form-col">
                     <input type="tel" class="form-control" id="phone" placeholder="מספר טלפון" pattern="[0-9]*" inputmode="numeric" required>
                 </div>
             </div>
