@@ -1,395 +1,401 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>טופס גיוס - כח אבטחה</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Heebo', sans-serif;
-            background-color: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: white;
-        }
+    <!DOCTYPE html>
+    <html lang="he" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>טופס גיוס - כח אבטחה</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                padding-top: 0; /* Remove padding at the top */
 
-        #form-container {
-            width: 100%;
-            max-width: 600px;
-            padding: 2rem;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(247, 191, 191, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo {
-    position: absolute;
-    top: -18px; /* Move the logo further up */
-    right: -18px; /* Move the logo further right */
-    width: 130px; /* Keep the new larger size */
-    height: auto;
-    z-index: 10; /* Ensure it stays on top but doesn't overlap */
-}
-
-
-        .background-image {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: auto;
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-
-
-        .form-title {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: bold;
-            padding-right: 80px; /* Add padding to the right to avoid logo overlap */
-
-        }
-
-        .form-control, .form-select {
-            margin-bottom: 1rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .form-select {
-            text-align-last: center;
-        }
-
-        .checkbox-container {
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-            font-weight: bold;
-        }
-
-        .checkbox-container label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            margin-left: 0.5rem;
-        }
-
-        #submit-btn {
-            width: 100%;
-            padding: 0.75rem;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #FFD700 0%, #000000 100%);
-            border: none;
-            color: white;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        #submit-btn:hover {
-            background: linear-gradient(135deg, #000000 0%, #FFD700 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        #disclaimer {
-            color: #d1d1d1;
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .custom-alert {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: 300px;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .form-row {
-            display: flex;
-            flex-wrap: nowrap;
-            margin-bottom: 1rem;
-            gap: 10px; /* Add space between the columns */
-
-
-        }
-        .form-col {
-            flex: 1; /* Flex-grow to make both columns take equal space */
-            padding-left: 0; /* Align the left column to the left */
-            padding-right: 0; /* Align the right column to the right */
-        }
-        .form-control {
-            margin-bottom: 0;
-            width: 100%;
-        }
-
-        #otherTraining {
-            display: none;
-            margin-top: -10px; /* Negative margin to pull it closer */
-            margin-bottom: 1rem; /* Keeps some spacing below */
-            border-radius: 10px; /* Consistent styling */
-            text-align: center; /* Center text alignment */
-        }
-
-
-
-
-
- 
-    </style>
-</head>
-<body>
-    <div id="form-container">
-        <img src="https://github.com/OsimYoter/a/blob/gh-pages/logo_nobg.png?raw=true" alt="Logo" class="logo">
-        <img src="https://github.com/OsimYoter/a/blob/gh-pages/bg_lion.jpg?raw=true" alt="Background" class="background-image">
-        <h1 class="form-title">מלאו את הטופס הבא ותועברו לשיחת וואטסאפ עם נציג מחברת כח אבטחה</h1>
-        <form id="recruitment-form">
-            <div class="form-row">
-                <div class="form-col">
-                    <input type="text" class="form-control" id="fullName" placeholder="שם מלא" required>
-                </div>
-                <div class="form-col">
-                    <input type="text" class="form-control" id="city" placeholder="יישוב מגורים" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <input type="tel" class="form-control" id="phone" placeholder="מספר טלפון" pattern="[0-9]*" inputmode="numeric" required>
-
-            </div>
-            <div class="form-row">
-                        <input type="text" class="form-control" id="lastJob" placeholder="מקום ותפקיד עבודה אחרון" required>
-
-            </div>
-
- 
-
-
-            <div class="form-row">
-
-                <div class="form-col">
-                    <select class="form-select" id="desiredRole" required>
-                        <option value="" disabled selected>תפקיד רצוי</option>
-                        <option value="תפקיד מטה">תפקיד מטה</option>
-                        <option value="תפקיד אבטחה">תפקיד אבטחה</option>
-                    </select>
-
-                </div>
-                <div class="form-col">
-                    <select class="form-select" id="trainingLevel" required>
-                        <option value="" disabled selected>רמת הכשרה</option>
-                        <option value="בודק בטחוני">בודק בטחוני</option>
-                        <option value="סדרן ספורט">סדרן ספורט</option>
-                        <option value="רמה א'">רמה א'</option>
-                        <option value="מתקדם ב'">מתקדם ב'</option>
-                        <option value="אחר">אחר</option>
-                    </select>
-                </div>
-
-
-            </div>
-            <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">        
-
-
-            <div class="checkbox-container">
-                <h5><strong>סמנו מה שרלוונטי עבורכם:</strong></h5>
-                <label><input type="checkbox" id="fullMilitaryService"> שירות צבאי מלא</label>
-                <label><input type="checkbox" id="rifleman"> רובאי 02 ומעלה</label>
-                <label><input type="checkbox" id="combatCertificate"> בעל תעודת לוחם</label>
-                <label><input type="checkbox" id="cleanRecord"> עבר ללא דופי</label>
-                <label><input type="checkbox" id="mobile"> האם את/ה נייד?</label>
-                <label><input type="checkbox" id="healthyStatus"> בריאות תקינה</label>
-            </div>
-            <button type="button" id="submit-btn" onclick="submitForm()">
-                המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>
-            </button>
-        </form>
-        <div id="disclaimer">
-            <small>הפרטים יישלחו בהתאם למדיניות הפרטיות.</small>
-        </div>
-    </div>
-    <div id="alert-container"></div>
-
-
-    <script>
-        const webAppUrl = 'https://script.google.com/macros/s/AKfycbxift61QkmdlrbTXi18Jt8vmCfJhg76xs4yF0SYmsKU3Cz9If79iaknwYhZ8738R9SgJA/exec';
-    
-        function resetButton(button) {
-            button.innerHTML = 'המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>';
-            button.style.background = "linear-gradient(135deg, #25D366 0%, #128C7E 100%)"; // Original background
-        }
-    
-        function showAlert(type, message) {
-            const alertContainer = document.getElementById('alert-container');
-            const alert = document.createElement('div');
-            alert.classList.add('custom-alert');
-            alert.classList.add(`alert-${type}`);
-            alert.innerHTML = `<strong>${message}</strong>`;
-            alertContainer.appendChild(alert);
-    
-            setTimeout(() => {
-                alert.remove();
-            }, 3000);
-        }
-
-        document.getElementById('trainingLevel').addEventListener('change', function() {
-            const otherTraining = document.getElementById('otherTraining');
-            if (this.value === 'אחר') {
-                otherTraining.style.display = 'block';
-                otherTraining.required = true;  // Make it required when 'אחר' is selected
-            } else {
-                otherTraining.style.display = 'none';
-                otherTraining.required = false; // Make it not required when other options are selected
+                font-family: 'Heebo', sans-serif;
+                background-color: rgba(0, 0, 0, 0.85);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                color: white;
             }
-        });
 
-function submitForm() {
-    const submitButton = document.getElementById('submit-btn');
-    submitButton.disabled = true;
+            #form-container {
+                width: 100%;
+                max-width: 600px;
+                padding: 2rem;
+  
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(247, 191, 191, 0.3);
+                position: relative;
+                overflow: hidden;
+                height: 100h; /* Take 90% of the viewport height */
+                margin-top: 0; /* Ensure no margin at the top */
 
-    // Change button text and background color
-    submitButton.textContent = "תכף תועברו למגייס. אנא המתינו...";
-    submitButton.style.background = "lightcoral"; // Change to light red
+            }
 
-    const fullName = document.getElementById('fullName').value;
-    const city = document.getElementById('city').value;
-    const lastJob = document.getElementById('lastJob').value;
-    const phone = document.getElementById('phone').value;
-    const trainingLevel = document.getElementById('trainingLevel').value;
-    const otherTraining = document.getElementById('otherTraining').value;
-    const desiredRole = document.getElementById('desiredRole').value;
-
-    // Check for empty fields
-    if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
-        showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
-        submitButton.disabled = false;
-        resetButton(submitButton);
-        return;
+            .logo {
+        position: absolute;
+        top: -18px; /* Move the logo further up */
+        right: -18px; /* Move the logo further right */
+        width: 130px; /* Keep the new larger size */
+        height: auto;
+        z-index: 10; /* Ensure it stays on top but doesn't overlap */
     }
 
-    // Check phone validity
-    if (!phone.match(/^[0-9]*$/)) {
-        showAlert('danger', 'אנא הכניסו מספר טלפון תקין');
-        submitButton.disabled = false;
-        resetButton(submitButton);
-        return;
-    }
 
-    // Prepare form data for Google Sheets
-    const formData = {
-        fullName: fullName,
-        city: city,
-        lastJob: lastJob,
-        phone: phone,
-        trainingLevel: trainingLevel === 'אחר' ? otherTraining : trainingLevel,
-        desiredRole: desiredRole,
-        fullMilitaryService: document.getElementById('fullMilitaryService').checked,
-        rifleman: document.getElementById('rifleman').checked,
-        combatCertificate: document.getElementById('combatCertificate').checked,
-        cleanRecord: document.getElementById('cleanRecord').checked,
-        mobile: document.getElementById('mobile').checked,
-        healthyStatus: document.getElementById('healthyStatus').checked
-    };
-
-    // Prepare WhatsApp message with checkboxes' state and labels
-    const checkboxes = ['fullMilitaryService', 'rifleman', 'combatCertificate', 'cleanRecord', 'mobile', 'healthyStatus'];
-    const whatsappMessage = `
-שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
-*שם מלא:* ${fullName}
-*יישוב מגורים:* ${city}
-*מקום ותפקיד עבודה אחרון:* ${lastJob}
-*טלפון:* ${phone}
-*רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
-*תפקיד רצוי:* ${desiredRole}
-
-*פרטים נוספים:*
-${checkboxes.map(item => {
-    const checkboxElement = document.getElementById(item);
-    const labelText = checkboxElement.parentElement.textContent.trim(); // Get label text from parent
-    return `${checkboxElement.checked ? '✅' : '❌'} ${labelText}`;
-}).join('\n')}
-        `.trim();
-
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
-
-    // Send form data to Google Sheets
-    const data = new URLSearchParams(formData).toString();
-
-    fetch(webAppUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Form data sent successfully');
-            showAlert('success', 'וואטסאפ תכף ייפתח, המתינו בסבלנות');
-            window.location.href = whatsappUrl; // Redirect to WhatsApp
-        } else {
-            console.error('Failed to send data');
-            window.location.href = whatsappUrl; // Redirect to WhatsApp anyway
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        window.location.href = whatsappUrl; // Redirect to WhatsApp on failure
-    })
-    .finally(() => {
-        submitButton.disabled = false;
-        resetButton(submitButton);
-    });
-}
-
-        
-        
-
-        
+            .background-image {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+                opacity: 0.3;
+                z-index: -1;
+            }
 
 
-    </script>
+
+            .form-title {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                font-weight: bold;
+                padding-right: 80px; /* Add padding to the right to avoid logo overlap */
+
+            }
+
+            .form-control, .form-select {
+                margin-bottom: 1rem;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            .form-select {
+                text-align-last: center;
+            }
+
+            .checkbox-container {
+                margin-bottom: 1rem;
+                position: relative;
+                z-index: 1;
+                font-weight: bold;
+            }
+
+            .checkbox-container label {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .checkbox-container input[type="checkbox"] {
+                margin-left: 0.5rem;
+            }
+
+            #submit-btn {
+                width: 100%;
+                padding: 0.75rem;
+                font-size: 1.1rem;
+                border-radius: 10px;
+                background: linear-gradient(135deg, #FFD700 0%, #000000 100%);
+                border: none;
+                color: white;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                position: relative;
+                z-index: 2;
+            }
+
+            #submit-btn:hover {
+                background: linear-gradient(135deg, #000000 0%, #FFD700 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            #disclaimer {
+                color: #d1d1d1;
+                text-align: center;
+                margin-top: 0.2rem;
+                font-size: 0.8rem;
+                position: relative;
+                z-index: 2;
+            }
+
+            .custom-alert {
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                width: 300px;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            .alert-success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .alert-danger {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+            .form-row {
+                display: flex;
+                flex-wrap: nowrap;
+                margin-bottom: 1rem;
+                gap: 10px; /* Add space between the columns */
+
+
+            }
+            .form-col {
+                flex: 1; /* Flex-grow to make both columns take equal space */
+                padding-left: 0; /* Align the left column to the left */
+                padding-right: 0; /* Align the right column to the right */
+            }
+            .form-control {
+                margin-bottom: 0;
+                width: 100%;
+            }
+
+            #otherTraining {
+                display: none;
+                margin-top: -10px; /* Negative margin to pull it closer */
+                margin-bottom: 1rem; /* Keeps some spacing below */
+                border-radius: 10px; /* Consistent styling */
+                text-align: center; /* Center text alignment */
+            }
+
+
+
+
+
     
-</body>
-</html>
+        </style>
+    </head>
+    <body>
+        <div id="form-container">
+            <img src="https://github.com/OsimYoter/a/blob/gh-pages/logo_nobg.png?raw=true" alt="Logo" class="logo">
+            <img src="https://github.com/OsimYoter/a/blob/gh-pages/bg_lion.jpg?raw=true" alt="Background" class="background-image">
+            <h1 class="form-title">מלאו את הטופס הבא ותועברו לשיחת וואטסאפ עם נציג מחברת כח אבטחה</h1>
+            <form id="recruitment-form">
+                <div class="form-row">
+                    <div class="form-col">
+                        <input type="text" class="form-control" id="fullName" placeholder="שם מלא" required>
+                    </div>
+                    <div class="form-col">
+                        <input type="text" class="form-control" id="city" placeholder="יישוב מגורים" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="tel" class="form-control" id="phone" placeholder="מספר טלפון" pattern="[0-9]*" inputmode="numeric" required>
+
+                </div>
+                <div class="form-row">
+                            <input type="text" class="form-control" id="lastJob" placeholder="מקום ותפקיד עבודה אחרון" required>
+
+                </div>
+
+    
+
+
+                <div class="form-row">
+
+                    <div class="form-col">
+                        <select class="form-select" id="desiredRole" required>
+                            <option value="" disabled selected>תפקיד רצוי</option>
+                            <option value="תפקיד מטה">תפקיד מטה</option>
+                            <option value="תפקיד אבטחה">תפקיד אבטחה</option>
+                        </select>
+
+                    </div>
+                    <div class="form-col">
+                        <select class="form-select" id="trainingLevel" required>
+                            <option value="" disabled selected>רמת הכשרה</option>
+                            <option value="בודק בטחוני">בודק בטחוני</option>
+                            <option value="סדרן ספורט">סדרן ספורט</option>
+                            <option value="רמה א'">רמה א'</option>
+                            <option value="מתקדם ב'">מתקדם ב'</option>
+                            <option value="אחר">אחר</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">        
+
+
+                <div class="checkbox-container">
+                    <h5><strong>סמנו מה שרלוונטי עבורכם:</strong></h5>
+                    <label><input type="checkbox" id="fullMilitaryService"> שירות צבאי מלא</label>
+                    <label><input type="checkbox" id="rifleman"> רובאי 02 ומעלה</label>
+                    <label><input type="checkbox" id="combatCertificate"> בעל תעודת לוחם</label>
+                    <label><input type="checkbox" id="cleanRecord"> עבר ללא דופי</label>
+                    <label><input type="checkbox" id="mobile"> האם את/ה נייד?</label>
+                    <label><input type="checkbox" id="healthyStatus"> בריאות תקינה</label>
+                </div>
+                <button type="button" id="submit-btn" onclick="submitForm()">
+                    המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>
+                </button>
+            </form>
+            <div id="disclaimer">
+                <small>הפרטים יישלחו בהתאם למדיניות הפרטיות.</small>
+            </div>
+        </div>
+        <div id="alert-container"></div>
+
+
+        <script>
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxift61QkmdlrbTXi18Jt8vmCfJhg76xs4yF0SYmsKU3Cz9If79iaknwYhZ8738R9SgJA/exec';
+        
+            function resetButton(button) {
+                button.innerHTML = 'המשך לשיחת וואטסאפ <i class="fab fa-whatsapp"></i>';
+                button.style.background = "linear-gradient(135deg, #25D366 0%, #128C7E 100%)"; // Original background
+            }
+        
+            function showAlert(type, message) {
+                const alertContainer = document.getElementById('alert-container');
+                const alert = document.createElement('div');
+                alert.classList.add('custom-alert');
+                alert.classList.add(`alert-${type}`);
+                alert.innerHTML = `<strong>${message}</strong>`;
+                alertContainer.appendChild(alert);
+        
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }
+
+            document.getElementById('trainingLevel').addEventListener('change', function() {
+                const otherTraining = document.getElementById('otherTraining');
+                if (this.value === 'אחר') {
+                    otherTraining.style.display = 'block';
+                    otherTraining.required = true;  // Make it required when 'אחר' is selected
+                } else {
+                    otherTraining.style.display = 'none';
+                    otherTraining.required = false; // Make it not required when other options are selected
+                }
+            });
+
+    function submitForm() {
+        const submitButton = document.getElementById('submit-btn');
+        submitButton.disabled = true;
+
+        // Change button text and background color
+        submitButton.textContent = "תכף תועברו למגייס. אנא המתינו...";
+        submitButton.style.background = "lightcoral"; // Change to light red
+
+        const fullName = document.getElementById('fullName').value;
+        const city = document.getElementById('city').value;
+        const lastJob = document.getElementById('lastJob').value;
+        const phone = document.getElementById('phone').value;
+        const trainingLevel = document.getElementById('trainingLevel').value;
+        const otherTraining = document.getElementById('otherTraining').value;
+        const desiredRole = document.getElementById('desiredRole').value;
+
+        // Check for empty fields
+        if (!fullName || !city || !lastJob || !phone || !trainingLevel || !desiredRole || (trainingLevel === 'אחר' && !otherTraining)) {
+            showAlert('danger', 'אנא מלאו את כל השדות הנדרשים');
+            submitButton.disabled = false;
+            resetButton(submitButton);
+            return;
+        }
+
+        // Check phone validity
+        if (!phone.match(/^[0-9]*$/)) {
+            showAlert('danger', 'אנא הכניסו מספר טלפון תקין');
+            submitButton.disabled = false;
+            resetButton(submitButton);
+            return;
+        }
+
+        // Prepare form data for Google Sheets
+        const formData = {
+            fullName: fullName,
+            city: city,
+            lastJob: lastJob,
+            phone: phone,
+            trainingLevel: trainingLevel === 'אחר' ? otherTraining : trainingLevel,
+            desiredRole: desiredRole,
+            fullMilitaryService: document.getElementById('fullMilitaryService').checked,
+            rifleman: document.getElementById('rifleman').checked,
+            combatCertificate: document.getElementById('combatCertificate').checked,
+            cleanRecord: document.getElementById('cleanRecord').checked,
+            mobile: document.getElementById('mobile').checked,
+            healthyStatus: document.getElementById('healthyStatus').checked
+        };
+
+        // Prepare WhatsApp message with checkboxes' state and labels
+        const checkboxes = ['fullMilitaryService', 'rifleman', 'combatCertificate', 'cleanRecord', 'mobile', 'healthyStatus'];
+        const whatsappMessage = `
+    שלום, אני פונה אליכם בעקבות טופס הגיוס ל"כח אבטחה".
+    *שם מלא:* ${fullName}
+    *יישוב מגורים:* ${city}
+    *מקום ותפקיד עבודה אחרון:* ${lastJob}
+    *טלפון:* ${phone}
+    *רמת הכשרה:* ${trainingLevel === 'אחר' ? otherTraining : trainingLevel}
+    *תפקיד רצוי:* ${desiredRole}
+
+    *פרטים נוספים:*
+    ${checkboxes.map(item => {
+        const checkboxElement = document.getElementById(item);
+        const labelText = checkboxElement.parentElement.textContent.trim(); // Get label text from parent
+        return `${checkboxElement.checked ? '✅' : '❌'} ${labelText}`;
+    }).join('\n')}
+            `.trim();
+
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=972523141216&text=${encodedMessage}`;
+
+        // Send form data to Google Sheets
+        const data = new URLSearchParams(formData).toString();
+
+        fetch(webAppUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: data
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Form data sent successfully');
+                showAlert('success', 'וואטסאפ תכף ייפתח, המתינו בסבלנות');
+                window.location.href = whatsappUrl; // Redirect to WhatsApp
+            } else {
+                console.error('Failed to send data');
+                window.location.href = whatsappUrl; // Redirect to WhatsApp anyway
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            window.location.href = whatsappUrl; // Redirect to WhatsApp on failure
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            resetButton(submitButton);
+        });
+    }
+
+            
+            
+
+            
+
+
+        </script>
+        
+    </body>
+    </html>
