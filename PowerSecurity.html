@@ -148,16 +148,24 @@
             display: flex;
             flex-wrap: nowrap;
             margin-bottom: 1rem;
+            gap: 10px; /* Add space between the columns */
+
+
         }
         .form-col {
-            flex: 1;
-            padding: 0 5px;
+            flex: 1; /* Flex-grow to make both columns take equal space */
+            padding-left: 0; /* Align the left column to the left */
+            padding-right: 0; /* Align the right column to the right */
         }
         .form-control {
             margin-bottom: 0;
             width: 100%;
         }
 
+
+
+
+ 
     </style>
 </head>
 <body>
@@ -175,27 +183,39 @@
                 </div>
             </div>
             <div class="form-row">
+                <input type="tel" class="form-control" id="phone" placeholder="מספר טלפון" pattern="[0-9]*" inputmode="numeric" required>
+
+            </div>
+            <div class="form-row">
+                        <input type="text" class="form-control" id="lastJob" placeholder="מקום ותפקיד עבודה אחרון" required>
+
+            </div>
+
+ 
+
+
+            <div class="form-row">
                 <div class="form-col">
-                    <input type="text" class="form-control" id="lastJob" placeholder="מקום ותפקיד עבודה אחרון" required>
+                    <select class="form-select" id="trainingLevel" required>
+                        <option value="" disabled selected>רמת הכשרה</option>
+                        <option value="בודק בטחוני">בודק בטחוני</option>
+                        <option value="סדרן ספורט">סדרן ספורט</option>
+                        <option value="רמה א'">רמה א'</option>
+                        <option value="מתקדם ב'">מתקדם ב'</option>
+                        <option value="אחר">אחר</option>
+                    </select>
+                    <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">        
                 </div>
                 <div class="form-col">
-                    <input type="tel" class="form-control" id="phone" placeholder="מספר טלפון" pattern="[0-9]*" inputmode="numeric" required>
+                    <select class="form-select" id="desiredRole" required>
+                        <option value="" disabled selected>תפקיד רצוי</option>
+                        <option value="תפקיד מטה">תפקיד מטה</option>
+                        <option value="תפקיד אבטחה">תפקיד אבטחה</option>
+                    </select>
+
                 </div>
             </div>
-            <select class="form-select" id="trainingLevel" required>
-                <option value="" disabled selected>רמת הכשרה</option>
-                <option value="בודק בטחוני">בודק בטחוני</option>
-                <option value="סדרן ספורט">סדרן ספורט</option>
-                <option value="רמה א'">רמה א'</option>
-                <option value="מתקדם ב'">מתקדם ב'</option>
-                <option value="אחר">אחר</option>
-            </select>
-            <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">
-            <select class="form-select" id="desiredRole" required>
-                <option value="" disabled selected>תפקיד רצוי</option>
-                <option value="תפקיד מטה">תפקיד מטה</option>
-                <option value="תפקיד אבטחה">תפקיד אבטחה</option>
-            </select>
+
             <div class="checkbox-container">
                 <h5><strong>סמנו מה שרלוונטי עבורכם:</strong></h5>
                 <label><input type="checkbox" id="fullMilitaryService"> שירות צבאי מלא</label>
