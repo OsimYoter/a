@@ -27,28 +27,53 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: auto;
+        }
+
+        .background-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+
 
         .form-title {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             text-align: center;
             font-weight: bold;
+            padding-right: 80px; /* Add padding to the right to avoid logo overlap */
+
         }
 
         .form-control, .form-select {
             margin-bottom: 1rem;
             border-radius: 10px;
-            text-align: center; /* Add this line to center the text */
+            text-align: center;
         }
 
         .form-select {
-            text-align-last: center; /* Add this line to center the text in dropdowns */
+            text-align-last: center;
         }
-        
 
         .checkbox-container {
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .checkbox-container label {
@@ -66,7 +91,7 @@
             padding: 0.75rem;
             font-size: 1.1rem;
             border-radius: 10px;
-            background: linear-gradient(135deg, #FFD700 0%, #000000 100%); /* Blend of yellow and black */
+            background: linear-gradient(135deg, #FFD700 0%, #000000 100%);
             border: none;
             color: white;
             font-weight: bold;
@@ -75,20 +100,23 @@
             justify-content: center;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         #submit-btn:hover {
-            background: linear-gradient(135deg, #000000 0%, #FFD700 100%); /* Reverse blend on hover */
+            background: linear-gradient(135deg, #000000 0%, #FFD700 100%);
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
 
         #disclaimer {
             color: #d1d1d1;
             text-align: center;
             margin-top: 1rem;
             font-size: 0.8rem;
+            position: relative;
+            z-index: 2;
         }
 
         .custom-alert {
@@ -119,6 +147,8 @@
 </head>
 <body>
     <div id="form-container">
+        <img src="logo_nobg.png" alt="Logo" class="logo">
+        <img src="bg_lion.jpg" alt="Background" class="background-image">
         <h1 class="form-title">מלאו את הטופס הבא ותועברו לשיחת וואטסאפ עם נציג מחברת כח אבטחה</h1>
         <form id="recruitment-form">
             <div class="row">
@@ -169,6 +199,7 @@
         </div>
     </div>
     <div id="alert-container"></div>
+
 
     <script>
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbxift61QkmdlrbTXi18Jt8vmCfJhg76xs4yF0SYmsKU3Cz9If79iaknwYhZ8738R9SgJA/exec';
@@ -309,8 +340,6 @@ ${checkboxes.map(item => {
 
 
     </script>
-    
-
     
 </body>
 </html>
