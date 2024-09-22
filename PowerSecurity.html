@@ -162,6 +162,15 @@
             width: 100%;
         }
 
+        #otherTraining {
+            display: none;
+            margin-top: -10px; /* Negative margin to pull it closer */
+            margin-bottom: 1rem; /* Keeps some spacing below */
+            border-radius: 10px; /* Consistent styling */
+            text-align: center; /* Center text alignment */
+        }
+
+
 
 
 
@@ -195,6 +204,15 @@
 
 
             <div class="form-row">
+
+                <div class="form-col">
+                    <select class="form-select" id="desiredRole" required>
+                        <option value="" disabled selected>תפקיד רצוי</option>
+                        <option value="תפקיד מטה">תפקיד מטה</option>
+                        <option value="תפקיד אבטחה">תפקיד אבטחה</option>
+                    </select>
+
+                </div>
                 <div class="form-col">
                     <select class="form-select" id="trainingLevel" required>
                         <option value="" disabled selected>רמת הכשרה</option>
@@ -204,17 +222,12 @@
                         <option value="מתקדם ב'">מתקדם ב'</option>
                         <option value="אחר">אחר</option>
                     </select>
-                    <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">        
                 </div>
-                <div class="form-col">
-                    <select class="form-select" id="desiredRole" required>
-                        <option value="" disabled selected>תפקיד רצוי</option>
-                        <option value="תפקיד מטה">תפקיד מטה</option>
-                        <option value="תפקיד אבטחה">תפקיד אבטחה</option>
-                    </select>
 
-                </div>
+
             </div>
+            <input type="text" class="form-control" id="otherTraining" placeholder="פרט רמת הכשרה אחרת" style="display: none;">        
+
 
             <div class="checkbox-container">
                 <h5><strong>סמנו מה שרלוונטי עבורכם:</strong></h5>
