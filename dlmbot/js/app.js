@@ -316,7 +316,7 @@
                     return;
                 }
         
-                fetch('http://localhost:8001/api/start_session', {
+                fetch('https://osimyoter.xyz/bot/api/start_session', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -362,7 +362,7 @@
             // Show typing animation while waiting for AI response
             let typingInterval = startTypingAnimation();
                 
-            fetch(`http://localhost:8001/api/response/${sessionId}`, {
+            fetch(`https://osimyoter.xyz/bot/api/response/${sessionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -558,7 +558,7 @@
             previewModal.style.display = 'flex'; 
         
             // Fetch the skills from the API using the session ID
-            fetch(`http://localhost:8001/api/skills/${sessionId}`, {
+            fetch(`https://osimyoter.xyz/bot/api/skills/${sessionId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -580,7 +580,7 @@
             })
             .finally(() => {
                 // Fetch the unit info from the API using the session ID
-                fetch(`http://localhost:8001/api/unit_info/${sessionId}`, {
+                fetch(`https://osimyoter.xyz/bot/api/unit_info/${sessionId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -601,7 +601,7 @@
                 })
                 .finally(() => {
                     // ** Fetch the service conditions now **
-                    fetch(`http://localhost:8001/api/service_conditions/${sessionId}`, {
+                    fetch(`https://osimyoter.xyz/bot/api/service_conditions/${sessionId}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -623,7 +623,7 @@
                     })
                     .finally(() => {
                         // ** Fetch the service length now **
-                        fetch(`http://localhost:8001/api/service_length/${sessionId}`, {
+                        fetch(`https://osimyoter.xyz/bot/api/service_length/${sessionId}`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -645,7 +645,7 @@
                         })
                         .finally(() => {
                             // ** Fetch the shalishut status now **
-                            fetch(`http://localhost:8001/api/shalishut_status/${sessionId}`, {
+                            fetch(`https://osimyoter.xyz/bot/api/shalishut_status/${sessionId}`, {
                                 method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json',
