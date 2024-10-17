@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת גיוס למילואים</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <!-- Bootstrap DatePicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="welcome-screen active">
+             <h6 class="text-center mb-4">דרושים - למילואים</h6>
+            <h3 class="text-center mb-4">מילוי מודעת גיוס ע"י היחידה</h3>
+            <p class="text-center mb-4">
+                מערכת זו מאפשרת ליחידות למלא מודעות גיוס למילואימניקים בקלות ובמהירות.
+                תוך דקות ספורות, תוכלו ליצור מודעת גיוס מותאמת אישית ומקצועית.
+                דוגמא למודעת גיוס ניתן לראות בתמונות מטה.
+            </p>
+            
+            <div class="image-container mb-4">
+                <img src="./images/example1.jpg" alt="דוגמה למודעת גיוס 1" class="gallery-image">
+                <img src="./images/example2.jpg" alt="דוגמה למודעת גיוס 2" class="gallery-image">
+            </div>
+            
+            <div class="text-center">
+                <button id="start-btn" class="btn btn-primary btn-lg">התחל</button>
+            </div>
+        </div>
+        
+        <div class="form-screen">
+            <h3 class="text-center mb-4">דרושים - למילואים</h3>
+            <div class="form-container">
+              <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>                
+              <form id="user-details-form">
+                    <div class="form-step active" data-step="1">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">שם פרטי</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">שם משפחה</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="phoneNumber" class="form-label">מספר טלפון</label>
+                          <i class="bi bi-info-circle" 
+                          data-bs-toggle="tooltip" 
+                          data-bs-placement="left" 
+                          title="מספר זה יקלוט את פניות המועמדים בוואטסאפ">
+                       </i> 
+                          <input type="tel" class="form-control" id="phoneNumber" required pattern="^05\d{8}$">
+                          <div class="invalid-feedback">מספר הטלפון חייב להכיל 10 ספרות ולהתחיל ב-05</div>
+                      </div>
+                        <button type="button" class="btn btn-primary next-step">הבא</button>
+                    </div>
+                    
+                    <div class="form-step" data-step="2">
+
+                        <h6 class="text-center mb-4">הנתונים בדף זה לא יתפרסמו בקהילה</h6>
+
+                    
+                        <div class="mb-3">
+                            <label for="unitName" class="form-label">שם יחידה</label>
+                            <input type="text" class="form-control" id="unitName" placeholder="גדוד 8 / חטיבה 19" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="unitRole" class="form-label">תפקידך ביחידה</label>
+                          <input type="text" class="form-control" id="unitRole" list="unitRoleOptions" required>
+                          <datalist id="unitRoleOptions">
+                            <option value="מפקד יחידה"/>
+                            <option value="מג&#34;ד"/>
+                            <option value="מ&#34;פ"/>
+                            <option value="מ&#34;מ"/>
+                            <option value="סמ&#34;פ"/>
+                            <option value="מח&#34;ט"/>
+                            <option value="סמח&#34;ט"/>
+                            <option value="קצין אג&#34;ם"/>
+                            <option value="קצין מבצעים"/>
+                            <option value="קצין מודיעין"/>
+                            <option value="קצין לוגיסטיקה"/>
+                            <option value="קצין רפואה"/>
+                            <option value="שליש"/>
+                            <option value="שלישה"/>
+                            <option value="רס&#34;ר"/>
+                            <option value="רס&#34;פ"/>
+                            <option value="קצין תקשוב"/>
+                            <option value="קצין הנדסה"/>
+                        </datalist>
+                      </div>
+                      <div class="mb-3">
+                        <label for="civilianJob" class="form-label">מקצוע שלך באזרחות</label>
+                        <input type="text" class="form-control" id="civilianJob" required>
+                    </div>
+                        <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                        <button type="button" class="btn btn-primary next-step">הבא</button>
+                    </div>
+                    
+                    <div class="form-step" data-step="3">
+
+                        <div class="mb-3">
+                            <label for="roleType" class="form-label">איזה תפקיד תרצו לגייס?</label>
+                            <input type="text" class="form-control" id="roleType" name="roleType" list="roleTypeOptions" placeholder="הקלידו.." required>
+                            <datalist id="roleTypeOptions">
+
+                            </datalist>
+
+                          </div>
+                        <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                        <button type="button" class="btn btn-primary next-step">הבא</button> <!-- Move to step 4 -->
+                      </div>
+
+                    <div class="form-step" data-step="4">
+                      <div class="mb-3">
+                          <label for="unitType" class="form-label">סוג יחידה</label>
+                          <input type="text" class="form-control" id="unitType" name="unitType" list="unitTypeOptions" placeholder="הקלידו.." required>
+                          <datalist id="unitTypeOptions">
+                           
+                          </datalist>
+                      </div>
+                  
+                      <div class="mb-3">
+                          <label for="militaryRegion" class="form-label">איפה המילואים הקרובים צפויים להיות?</label>
+                          <i class="bi bi-info-circle" 
+                          data-bs-toggle="tooltip" 
+                          data-bs-placement="left" 
+                          title="אם זה לא ידוע, בחרו אזור אופרטיבי">
+                       </i> 
+                          <select class="form-control" id="militaryRegion" name="militaryRegion">
+                              <option value="צפון">צפון</option>
+                              <option value="דרום">דרום</option>
+                              <option value="יו''ש">יו''ש</option>
+                              <option value="מרכז">מרכז</option>
+                              <option value="גזרת עזה">גזרת עזה</option>
+                              <option value="בקעה">בקעה</option>
+                              <option value="ערבה">ערבה</option>
+                              <option value="אילת">אילת</option>
+                              <option value="רב זירתי">רב זירתי</option>
+                          </select>
+                      </div>
+                     <!-- Date Selection with Checkboxes -->
+<div class="mb-3">
+  <label for="serviceStartDate" class="form-label">בחר תאריך התחלה</label>
+  <input type="text" id="serviceStartDate" class="form-control datepicker" name="serviceStartDate" required>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="checkbox" id="unknownServicePeriod">
+    <label class="form-check-label" for="unknownServicePeriod">אין תקופת שירות ידועה</label>
+  </div>
+</div>
+
+<div class="mb-3">
+  <label for="serviceEndDate" class="form-label">בחר תאריך סיום</label>
+  <input type="text" id="serviceEndDate" class="form-control datepicker" name="serviceEndDate" required>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="checkbox" id="noEndDate">
+    <label class="form-check-label" for="noEndDate">ללא צפי סיום</label>
+  </div>
+</div>
+
+<div class="alert alert-danger" id="dateWarning" style="display:none;">
+  תאריך סיום אינו יכול להיות מוקדם יותר מתאריך התחלה.
+</div>
+
+
+                      <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                      <button type="submit" id="start-chat-btn" class="btn btn-success">סיום והתחלת צ'אט</button>
+                  </div>
+                  
+
+
+                </form>
+            </div>
+        </div>
+        
+        <div class="chat-screen">
+            <h2 class="text-center mb-4">יצירת מודעת גיוס למילואים</h2>
+            <!-- Button container -->
+            <div class="button-group">
+              <button id="back-to-form-btn" class="btn btn-outline-secondary mb-3">חזרה לטופס</button>
+              <button id="preview-btn" class="btn btn-outline-primary mb-3">תצוגה מקדימה</button>
+          </div>
+            <div class="chat-area mb-3"></div>
+            <div class="input-group">
+                <input type="text" id="user-input" class="form-control" placeholder="הקלד את הודעתך כאן...">
+                <button class="btn btn-primary" id="send-btn">שלח</button>
+            </div>
+        </div>
+    </div>
+
+  <div id="preview-modal" class="preview-modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close-modal">&times;</span>
+      <div id="recruitment-ad" class="recruitment-ad">
+        <p><u>סוג יחידה:</u> <span id="uType"></span></p>
+        <p><u>אזור בארץ:</u> <span id="region"></span></p>
+        <p>- - - - - - - - - - - - - - - - - - - - </p>
+        <p>⬅️ <u>דרושים:</u></p>
+        <ul id="positions"></ul>
+        <p>⬅️ <u>כישורים נדרשים:</u></p>
+        <ul id="skills"></ul>
+        <p>⬅️ <u>פרטים על היחידה:</u></p>
+        <ul id="unitDetails"></ul>
+        <p>⬅️ <u>תנאי שירות:</u></p>
+        <ul id="serviceConditions"></ul>
+        <p>⬅️ <u>תקופת שירות הקרובה:</u> <span id="servicePeriodRange"></span></p>
+        <p>- - - - - - - - - - - - - - - - - - - - </p>
+        <p><span id="recruitmentIn"></span></p>
+        <p><span id="serviceLength"></span></p>
+        <p><span id="shalishutStatus"></span></p>
+        <p>- - - - - - - - - - - - - - - - - - - - </p>
+        <p><span id="contact"></span></p>
+        <p>__</p>
+        <p>מודעה מספר #<span id="adNumber"></span></p>
+      </div>
+    </div>
+  </div>
+
+
+<!-- jQuery (Required for Bootstrap Datepicker) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script src="js/app.js"></script> <!-- Your custom JS file -->
+    
+</body>
+</html>
