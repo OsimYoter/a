@@ -1,0 +1,277 @@
+/* General body and layout styles */
+body {
+    font-family: 'Heebo', sans-serif;
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Screen visibility and transitions */
+.welcome-screen, .form-screen, .chat-screen {
+    display: none;
+}
+
+.welcome-screen.active, .form-screen.active, .chat-screen.active {
+    display: block;
+}
+
+/* Image gallery styling */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.gallery-image {
+    cursor: pointer;
+    width: 120px;
+    height: auto;
+    transition: transform 0.5s ease;
+}
+
+.gallery-image:hover {
+    transform: scale(1.8);
+}
+
+.enlarged-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.enlarged-image img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Chat area styles */
+.chat-area {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    background-color: #ffffff;
+}
+
+.user-message, .bot-message {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: #ffffff;
+    align-self: flex-end;
+}
+
+.bot-message {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+#loading {
+    font-style: italic;
+    color: #888;
+}
+
+/* Form container styles */
+.form-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Chat preview button */
+.preview-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 0.5rem 1rem;
+}
+
+/* Modal styles for preview */
+.preview-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    max-height: 80vh;
+    text-align: right;
+    overflow-y: auto;
+}
+
+/* Recruitment ad text and layout */
+.recruitment-ad {
+    font-size: 0.85rem;
+    line-height: 1.2;
+    text-align: right;
+    direction: rtl;
+}
+
+.recruitment-ad ul {
+    list-style-type: none;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.recruitment-ad p, .recruitment-ad ul {
+    margin-bottom: 0.4rem;
+}
+
+.recruitment-ad h2 {
+    font-size: 1rem;
+    margin-bottom: 0.25em;
+}
+
+.close-modal {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Adjustments for mobile screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .chat-area {
+        height: 300px;
+    }
+
+    .gallery-image {
+        width: 100px;
+    }
+
+    .modal-content {
+        padding: 5px;
+        width: 95%;
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .gallery-image {
+        width: 80px;
+    }
+}
+
+/* Button group styling to align buttons next to each other */
+.button-group {
+    display: flex;
+    justify-content: space-between; /* Align buttons with space between them */
+    gap: 10px; /* Add space between the buttons */
+    margin-bottom: 15px; /* Add margin below the buttons */
+}
+
+.button-group .btn {
+    flex: 1; /* Ensure both buttons are of equal width */
+}
+
+/* ... your existing styles ... */
+
+/* Style for missing values in preview */
+.recruitment-ad span:empty::before {
+    content: "???";
+    background-color: rgba(255, 0, 0, 0.5); /* Red background with 50% opacity */
+    padding: 0.2em 0.4em; /* Add some padding for visibility */
+    border-radius: 3px; /* Optional: Round the corners */
+  }
+
+  /* ... your existing styles ... */
+
+.progress {
+    height: 10px; /* Adjust height as needed */
+    background-color: #e9ecef; /* Light grey background */
+    border-radius: 5px; /* Optional: Rounded corners */
+    margin-bottom: 20px; /* Add margin below the progress bar */
+}
+
+.progress-bar {
+    background-color: #007bff; /* Primary blue color */
+    width: 0%; /* Initial width set to 0% */
+    height: 100%;
+    transition: width 0.3s ease-in-out; /* Smooth transition for width changes */
+}
+
+.d-flex {
+    display: flex;
+    gap: 10px; /* Add space between start day and month */
+}
+
+.half-width {
+    flex: 1; /* Make each select box take half the width */
+}
+
+@media (max-width: 768px) {
+    .half-width {
+        flex-basis: 100%; /* Stack on smaller screens */
+    }
+}
+
+input[disabled] {
+    background-color: #e9ecef;
+  }
+  
+  #dateWarning {
+    font-size: 0.9rem;
+  }
+  
