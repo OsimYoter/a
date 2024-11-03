@@ -1,363 +1,304 @@
-<!DOCTYPE html>
-<html lang="he">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>דרושים - למילואים</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!DOCTYPE html>
+  <html lang="he" dir="rtl">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>מערכת גיוס למילואים</title>
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+      
+      <!-- Bootstrap DatePicker CSS -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Heebo', sans-serif;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: white;
-  direction: rtl;
-}
+      <link href="css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+      <div class="container mt-5">
+          <div class="welcome-screen active">
+              <h6 class="text-center mb-4">דרושים - למילואים</h6>
+              <h3 class="text-center mb-4">מילוי מודעת גיוס ע"י היחידה</h3>
+              <p class="text-center mb-4">
+                  מערכת זו מאפשרת ליחידות למלא מודעות גיוס למילואימניקים בקלות ובמהירות.
+                  תוך דקות ספורות, תוכלו ליצור מודעת גיוס מותאמת אישית ומקצועית.
+                  דוגמא למודעת גיוס ניתן לראות בתמונות מטה.
+              </p>
+              
+              <div class="image-container mb-4">
+                  <img src="./images/example1.jpg" alt="דוגמה למודעת גיוס 1" class="gallery-image">
+                  <img src="./images/example2.jpg" alt="דוגמה למודעת גיוס 2" class="gallery-image">
+              </div>
+              
+              <div class="text-center">
+                  <button id="start-btn" class="btn btn-primary btn-lg">התחל</button>
+              </div>
+          </div>
+          
+          <div class="form-screen">
+              <h3 class="text-center mb-4">דרושים - למילואים</h3>
+              <div class="form-container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>                
+                <form id="user-details-form">
+                      <div class="form-step active" data-step="1">
+                          <div class="mb-3">
+                              <label for="firstName" class="form-label">שם פרטי</label>
+                              <input type="text" class="form-control" id="firstName" name="firstName" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="lastName" class="form-label">שם משפחה</label>
+                              <input type="text" class="form-control" id="lastName" name="lastName" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">מספר טלפון</label>
+                            <i class="bi bi-info-circle" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="left" 
+                            title="מספר זה יקלוט את פניות המועמדים בוואטסאפ">
+                        </i> 
+                            <input type="tel" class="form-control" id="phoneNumber" required pattern="^05\d{8}$">
+                            <div class="invalid-feedback">מספר הטלפון חייב להכיל 10 ספרות ולהתחיל ב-05</div>
+                        </div>
+                          <button type="button" class="btn btn-primary next-step">הבא</button>
+                      </div>
+                      
+                      <div class="form-step" data-step="2">
 
-#ad {
-  width: 100%;
-  max-width: 600px;
-  padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  text-align: center;
-}
+                          <h6 class="text-center mb-4">הנתונים בדף זה לא יתפרסמו בקהילה</h6>
 
-#ad-title {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
+                      
+                          <div class="mb-3">
+                              <label for="unitName" class="form-label">שם יחידה</label>
+                              <input type="text" class="form-control" id="unitName" placeholder="גדוד 8 / חטיבה 19" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="unitRole" class="form-label">תפקידך ביחידה</label>
+                            <input type="text" class="form-control" id="unitRole" list="unitRoleOptions" required>
+                            <datalist id="unitRoleOptions">
+                              <option value="מפקד יחידה"/>
+                              <option value="מג&#34;ד"/>
+                              <option value="מ&#34;פ"/>
+                              <option value="מ&#34;מ"/>
+                              <option value="סמ&#34;פ"/>
+                              <option value="מח&#34;ט"/>
+                              <option value="סמח&#34;ט"/>
+                              <option value="קצין אג&#34;ם"/>
+                              <option value="קצין מבצעים"/>
+                              <option value="קצין מודיעין"/>
+                              <option value="קצין לוגיסטיקה"/>
+                              <option value="קצין רפואה"/>
+                              <option value="שליש"/>
+                              <option value="שלישה"/>
+                              <option value="רס&#34;ר"/>
+                              <option value="רס&#34;פ"/>
+                              <option value="קצין תקשוב"/>
+                              <option value="קצין הנדסה"/>
+                          </datalist>
+                        </div>
+                        <div class="mb-3">
+                          <label for="civilianJob" class="form-label">מקצוע שלך באזרחות</label>
+                          <input type="text" class="form-control" id="civilianJob" required>
+                      </div>
+                          <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                          <button type="button" class="btn btn-primary next-step">הבא</button>
+                      </div>
+                      
+                      <div class="form-step" data-step="3">
 
-#ad-text {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-}
+                          <div class="mb-3">
+                              <label for="roleType" class="form-label">איזה תפקיד תרצו לגייס?</label>
+                              <input type="text" class="form-control" id="roleType" name="roleType" list="roleTypeOptions" placeholder="הקלידו.." required>
+                              <datalist id="roleTypeOptions">
 
-.form-control {
-  height: 40px;
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-}
+                              </datalist>
 
-.form-control::placeholder, .form-select::placeholder {
-  text-align: center;
-}
+                            </div>
+                          <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                          <button type="button" class="btn btn-primary next-step">הבא</button> <!-- Move to step 4 -->
+                        </div>
 
-.form-control.right-aligned {
-  text-align: right;
-  margin-left: 0.5rem;
-  text-align: center;
-}
+                      <div class="form-step" data-step="4">
+                        <div class="mb-3">
+                            <label for="unitType" class="form-label">סוג יחידה</label>
+                            <input type="text" class="form-control" id="unitType" name="unitType" list="unitTypeOptions" placeholder="הקלידו.." required>
+                            <datalist id="unitTypeOptions">
+                            
+                            </datalist>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="militaryRegion" class="form-label">איפה המילואים הקרובים צפויים להיות?</label>
+                            <i class="bi bi-info-circle" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="left" 
+                            title="אם זה לא ידוע, בחרו אזור אופרטיבי">
+                        </i> 
+                            <select class="form-control" id="militaryRegion" name="militaryRegion">
+                                <option value="צפון">צפון</option>
+                                <option value="דרום">דרום</option>
+                                <option value="יו''ש">יו''ש</option>
+                                <option value="מרכז">מרכז</option>
+                                <option value="גזרת עזה">גזרת עזה</option>
+                                <option value="בקעה">בקעה</option>
+                                <option value="ערבה">ערבה</option>
+                                <option value="אילת">אילת</option>
+                                <option value="רב זירתי">רב זירתי</option>
+                            </select>
+                        </div>
+                      <!-- Date Selection with Checkboxes -->
+                      <div class="mb-3">
+                        <label for="serviceStartDate" class="form-label">בחר תאריך התחלה</label>
+                        <input type="text" id="serviceStartDate" class="form-control datepicker" name="serviceStartDate" required>
 
-.form-control.left-aligned {
-  text-align: left;
-  text-align: center;
-}
+                        <div class="form-check mt-2">
+                          <input class="form-check-input" type="checkbox" id="unknownServicePeriod">
+                          <label class="form-check-label" for="unknownServicePeriod">אין תקופת שירות ידועה</label>
+                        </div>
+                      </div>
 
-.profession-input-group {
-  display: flex;
-  justify-content: space-between;
-}
+                      <div class="mb-3">
+                        <label for="serviceEndDate" class="form-label">בחר תאריך סיום</label>
+                        <input type="text" id="serviceEndDate" class="form-control datepicker" name="serviceEndDate" required>
+
+                        <div class="form-check mt-2">
+                          <input class="form-check-input" type="checkbox" id="noEndDate">
+                          <label class="form-check-label" for="noEndDate">ללא צפי סיום</label>
+                        </div>
+                      </div>
+
+                      <div class="alert alert-danger" id="dateWarning" style="display:none;">
+                        תאריך סיום אינו יכול להיות מוקדם יותר מתאריך התחלה.
+                      </div>
+
+                        <button type="button" class="btn btn-secondary prev-step">הקודם</button>
+                        <button type="submit" id="start-chat-btn" class="btn btn-success">סיום והתחלת צ'אט</button>
+                    </div>
+                    
+
+                  </form>
+              </div>
+          </div>
+          
+          <div class="chat-screen">
+              <h2 class="text-center mb-4">יצירת מודעת גיוס למילואים</h2>
+              <!-- Button container -->
+              <div class="button-group">
+                <button id="back-to-form-btn" class="btn btn-outline-secondary mb-3">חזרה לטופס</button>
+                <button id="preview-btn" class="btn btn-outline-primary mb-3">תצוגה מקדימה</button>
+              </div>
+              <div class="chat-area mb-3"></div>
+              <div class="input-group">
+                  <input type="text" id="user-input" class="form-control" placeholder="הקלד את הודעתך כאן...">
+                  <button class="btn btn-primary" id="send-btn">שלח</button>
+              </div>
+              <div id="ad-submit-btn-container" class="text-center mt-3" style="display: none;">
+                <button id="ad-submit-btn" class="btn btn-primary">
+                    צפיה ושליחת מודעת הגיוס
+                </button>
+              </div>
+
+          </div>
+
+          <!-- New Verification Page -->
+          <div id="verification-screen" class="container verification-screen" style="display: none;">
+            <h4 class="text-center mt-4">אימות אחרון לפני שליחה</h4>
+             <!-- Audio recording controls -->
+            <div class="audio-controls text-center">
+              <button id="record-btn" class="btn btn-outline-primary">הקלט</button>
+              <button id="stop-btn" class="btn btn-outline-danger" style="display: none;">עצור</button>
+              <p id="recording-timer" style="display: none;">00:00</p>
+            </div>
+
+            <!-- Audio playback -->
+            <div class="text-center">
+              <p>הקלטה שלך:</p>
+              <audio id="audio-playback" controls style="display: none;"></audio>
+            </div>
+
+            <!-- PDF file upload input -->
+            <div class="mb-3">
+              <label for="pdfFile" class="form-label">העלה קובץ PDF</label>
+              <input type="file" class="form-control" id="pdfFile" accept=".pdf">
+            </div>
+
+            <!-- Submit button -->
+            <button id="final-submit-btn" class="btn btn-primary">שליחה</button>
+
+        </div>
+              
+        <!-- Final instructions screen -->
+        <div id="thank-you-screen" class="container thank-you-screen" style="display: none;">
+          <h4>תודה על מילוי מודעת הגיוס.</h4>
+          <p>המודעה תפורסם בהמשך, בהתאם לצורך הקיים, לאחר אישור של אחד ממנהלי הקהילה.</p>
+          <p>ממליצים לפעול ע"פ ההנחיות הבאות:</p>
+          <ul class="custom-list">
+            <li>⛔ לפני אימות מועמד, <strong>לא לשתף במידע נוסף/רגיש</strong> אודות התפקיד.</li>
+            <li>❌ <strong>לא ללחוץ</strong> על קישורים שנשלחים.</li>
+            <li>🆔 לבקש פרטים רלוונטיים מהמועמד כמו <strong>מספר אישי</strong> ולבדוק עם <strong>השלישות</strong> שאין מורכבות/בעיה לגייס.</li>
+            <li>📞 אם הכל תקין, יש לבצע <strong>אימות באמצעות שיחת טלפון או הודעה קולית</strong> בוואטסאפ.</li>
+            <li>⚠️ לאחר תהליך זה, ניתן לשתף <strong>בזהירות</strong> פרטים נוספים לגבי הגיוס.</li>
+            <li>🤝 במידה ומדובר בסיפוח, מומלץ לקבוע מראש מספר <strong>ימי ניסיון עם המועמדים</strong> שיגויסו, בתיאום ציפיות ראשוני.</li>
+          </ul>
+          
+          <p>זיכרו, עלינו לפעול במשנה זהירות.</p>
+          <p><strong>בטחון מידע לפני הכל!</strong></p>
+          <p>צוות <strong>דרושים - למילואים</strong> <a href="https://OsimYoter.co.il">https://OsimYoter.co.il</a></p>
+        </div>
 
 
-.form-select {
-  text-align: center;
-  text-align-last: center;
-  margin-bottom: 1rem;
-  height: 40px;
-  font-size: 1rem;
-  border-radius: 10px;
-}
-
-button[type="button"] {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #8FBC8F 0%, #98FB98 100%);
-  border: none;
-  color: black;
-  font-weight: bold;
-  transition: background 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-button[type="button"]:hover {
-  background: linear-gradient(135deg, #98FB98 0%, #8FBC8F 100%);
-  color: black;
-}
-
-.military-btn:hover {
-  background: linear-gradient(135deg, #3b4422 0%, #4b5320 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-
-
-#disclaimer {
-  color: #d1d1d1;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-#disclaimer a {
-  color: #4e73df;
-  text-decoration: none;
-}
-
-#disclaimer a:hover {
-  text-decoration: underline;
-}
-
-.custom-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  width: 300px;
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  font-size: 1.2rem;
-}
-
-.custom-alert .btn-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.custom-alert .btn-close:hover {
-  color: white;
-}
-
-  </style>
-</head>
-<body>
-  <div id="ad">
-    <div id="ad-title">דרושים - למילואים</div>
-    <div id="ad-text">מלאו את הטופס והפרטים יועברו לוואטסאפ של המגייס</div>
-    <form id="recruitment-form">
-      <input type="text" class="form-control" id="name" placeholder="שם מלא" required>
-      <input type="tel" class="form-control" id="phone" placeholder="מספר פלאפון" pattern="[0-9]*" required>
-      <div class="profession-input-group">
-        <input type="text" class="form-control right-aligned" id="occupation-civilian" placeholder="מקצוע אזרחי" required>
-        <input type="text" class="form-control left-aligned" id="occupation-military" placeholder="מקצוע צבאי" required>
       </div>
-      <select class="form-select" id="serviceStatus" required>
-        <option value="" disabled selected hidden>סטטוס שירות</option>
-        <option value="idk">לא יודע/ת</option>
-        <option value="maagar">מאגר</option>
-        <option value="ptor">פטור</option>
-        <option value="active_mesharet">משרת מילואים פעיל</option>
-      </select>
-      <button type="button" class="btn btn-primary military-btn" onclick="submitForm()">לחצו למעבר להודעת וואטסאפ עם המגייס <i class="fab fa-whatsapp"></i></button>
 
-      </button>
-      <div id="disclaimer" class="mt-3">
-        <small>
-          פרטיכם יישלחו בהתאם ל<a href="https://osimyoter.co.il/pp" target="_blank">מדיניות הפרטיות</a>.
-        </small>
+    <div id="preview-modal" class="preview-modal">
+      <div class="modal-content">
+        <span id="close-modal" class="close-modal">&times;</span>
+        <div id="recruitment-ad" class="recruitment-ad">
+          <p><u>סוג יחידה:</u> <span id="uType"></span></p>
+          <p><u>אזור בארץ:</u> <span id="region"></span></p>
+          <p>- - - - - - - - - - - - - - - - - - - - </p>
+          <p>⬅️ <u>דרושים:</u></p>
+          <ul id="positions"></ul>
+          <p>⬅️ <u>כישורים נדרשים:</u></p>
+          <ul id="skills"></ul>
+          <p>⬅️ <u>פרטים על היחידה:</u></p>
+          <ul id="unitDetails"></ul>
+          <p>⬅️ <u>תנאי שירות:</u></p>
+          <ul id="serviceConditions"></ul>
+          <p>⬅️ <u>תקופת שירות הקרובה:</u> <span id="servicePeriodRange"></span></p>
+          <p>- - - - - - - - - - - - - - - - - - - - </p>
+          <p><span id="recruitmentIn"></span></p>
+          <p><span id="serviceLength"></span></p>
+          <p><span id="shalishutStatus"></span></p>
+          <p>- - - - - - - - - - - - - - - - - - - - </p>
+          <p><span id="contact"></span></p>
+          <p>__</p>
+          <p>מודעה מספר #<span id="adNumber"></span></p>
+        </div>
+                <!-- Approve and Send Ad Button -->
+                <div class="text-center mt-3">
+                  <button id="approve-ad-btn" class="btn btn-success">אישור ושליחה</button>
+              </div>
       </div>
-    </form>
-  </div>
-  <div id="alert-container"></div>
-  <script>
-
-    function decodeURL(url) {
-      return url.replace(/%3F/g, '?').replace(/%3D/g, '=');
-    }
-
-    function getParameterByName(name, url = window.location.href) {
-      url = decodeURL(url); // Decode the URL first
-      name = name.replace(/[\[\]]/g, '\\$&');
-      const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-      const results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+    </div>
 
 
-    function generateUUID() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0,
-          v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-    }
-
-    function extractFourDigits(adNumber) {
-      // if string includes wa, tg, then replace it with empty string. like tg1234, should be 1234
-      adNumber = adNumber.replace(/(wa|tg)/g, '');
-      // then check if what is left is 4 digits. if it is, return it. if not, return null
-      return adNumber.match(/\d{4}/) ? adNumber.match(/\d{4}/)[0] : null;
-    }
 
 
-    const uuid = generateUUID();
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbzhKjOUNx5ltP0tzX-BiU-d1UylPvuMXHecwddrVOce0--7xDrMpTo4LJK9CSQ-9vSWOg/exec';
-
-  function submitForm() {
-    const submitButton = document.querySelector('button[type="button"]');
-    submitButton.disabled = true; // Disable the button
-  
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const occupationCivilian = document.getElementById('occupation-civilian').value;
-    const occupationMilitary = document.getElementById('occupation-military').value;
-    const serviceStatus = document.getElementById('serviceStatus').value;
-  
-    if (!name || !phone || !occupationCivilian || !occupationMilitary || !serviceStatus) {
-      showAlert('danger', 'אנא מלאו את כל השדות');
-      submitButton.disabled = false; // Re-enable the button if validation fails
-      return;
-    }
-  
-    if (!phone.match(/^[0-9]*$/)) {
-      showAlert('danger', 'אנא הכניסו מספר פלאפון תקין');
-      submitButton.disabled = false; // Re-enable the button if validation fails
-      return;
-    }
-  
-    showAlert('success', 'וואטסאפ תכף ייפתח');
-    const data = `uuid=${encodeURIComponent(uuid)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&occupationCivilian=${encodeURIComponent(occupationCivilian)}&occupationMilitary=${encodeURIComponent(occupationMilitary)}&status=${encodeURIComponent(serviceStatus)}&userContinued=true`;
-  
-    // Log the data to the console
-    //console.log('Data being sent:', data);
-  
-    fetch(webAppUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: data,
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log('Data sent successfully');
-        redirectToWhatsapp(phone, name, serviceStatus);
-      } else {
-        console.error('Failed to send data');
-        redirectToWhatsapp(phone, name, serviceStatus);
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      redirectToWhatsapp(phone, name, serviceStatus);
-    })
-    .finally(() => {
-      submitButton.disabled = false; // Re-enable the button after submission attempt
-    });
-  }
 
 
-    function showAlert(type, message) {
-      const alertContainer = document.getElementById('alert-container');
-      const alert = document.createElement('div');
-      alert.classList.add('custom-alert');
-      alert.setAttribute('role', 'alert');
-      alert.innerHTML = `
-        <strong>${message}</strong>
-      `;
-      alertContainer.appendChild(alert);
-
-      setTimeout(() => {
-        alert.remove();
-      }, 3000);
-    }
-
-    function getUserIP() {
-      return fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => data.ip)
-        .catch(error => console.error(error));
-    }
 
 
-    function redirectToWhatsapp(phone, name, serviceStatus) {
-      const unitPhoneNumber = getParameterByName('phone');
-      const serviceStatusLabel = document.querySelector(`#serviceStatus option[value="${serviceStatus}"]`).innerText;
-      const adNumber = getParameterByName('number').split('?')[0];
-      const extractedAdNumber = extractFourDigits(adNumber); // Extract 4 digits
-      console.log('extractedAdNumber:', extractedAdNumber);
+  <!-- jQuery (Required for Bootstrap Datepicker) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      let whatsappMessage = `שלום, אני פונה אליכם בהמשך למודעת הגיוס שפרסמתם בקהילת דרושים - למילואים.%0a%0a`;
-      whatsappMessage += `*מספר פלאפון:* ${phone}%0a*שם מלא:* ${name}%0a*סטטוס שירות:* ${serviceStatusLabel}`;
-      if (extractedAdNumber) {
-        whatsappMessage += `%0a*מספר מודעה:* ${extractedAdNumber}`;
-      }
-      whatsappMessage += `%0a%0aאשמח לשתף פרטים נוספים ככל שיידרש.`;
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${unitPhoneNumber}&text=${whatsappMessage}`;
-      window.location.href = whatsappUrl;
-    }
+  <!-- Bootstrap Datepicker JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-
-    function sendToGoogleSheet() {
-      const adNumber = getParameterByName('number').split('?')[0];
-      const extractedAdNumber = extractFourDigits(adNumber); // Extract 4 digits from the ad number
-      const now = new Date();
-      const dateTime = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-      getUserIP()
-        .then(userIP => {
-          const data = `uuid=${uuid}&adNumber=${adNumber}&dateTime=${dateTime}&userIP=${userIP}`;
-          //console.log('Data being sent:', data);
-
-          fetch(webAppUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: data,
-          })
-          .then(response => {
-            if (response.ok) {
-              console.log('success');
-            } else {
-              console.error('failed');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        })
-        .catch(error => {
-          console.error('Error getting user IP:', error);
-        });
-    }
-
-    window.addEventListener('load', () => {
-      sendToGoogleSheet();
-    });
-  </script>
-</body>
-</html>
+  <script src="js/app.js"></script> <!-- Your custom JS file -->
+      
+  </body>
+  </html>
