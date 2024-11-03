@@ -19,11 +19,11 @@ body {
 }
 
 /* Screen visibility and transitions */
-.welcome-screen, .form-screen, .chat-screen {
+.welcome-screen, .form-screen, .chat-screen, .verification-screen, .thank-you-screen {
     display: none;
 }
 
-.welcome-screen.active, .form-screen.active, .chat-screen.active {
+.active {
     display: block;
 }
 
@@ -123,7 +123,7 @@ body {
 }
 
 /* Modal styles for preview */
-.preview-modal {
+.preview-modal , .thank-you-modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -138,13 +138,14 @@ body {
 
 .modal-content {
     background-color: #fff;
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
     width: 90%;
-    max-width: 350px;
+    max-width: 500px;
     max-height: 80vh;
     text-align: right;
     overflow-y: auto;
+    position: relative;
 }
 
 /* Recruitment ad text and layout */
@@ -275,3 +276,111 @@ input[disabled] {
     font-size: 0.9rem;
   }
   
+
+  @keyframes colorFlash {
+    0%, 100% { background-color: initial; }
+    50% { background-color: red; }
+}
+
+.color-flash {
+    animation: colorFlash 1s ease-in-out infinite;
+}
+
+
+.btn {
+    border-radius: 5px;
+}
+
+/* Audio Recording Controls */
+.audio-controls {
+    flex-direction: column;
+    align-items: center;
+}
+
+#recording-timer {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+/* Verification Modal Specific Styling */
+.audio-controls button {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+#pdf-upload {
+    margin-top: 15px;
+}
+
+.small {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+
+#back-to-home-btn {
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Final Submission Button */
+#final-submit-btn {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+}
+
+.spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.verification-screen, .thank-you-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.custom-list {
+    list-style-type: none; /* Remove default bullet points */
+    padding-left: 0; /* Remove default padding */
+}
+
+.custom-list li {
+    margin-bottom: 0.5em; /* Add space between each item */
+}
