@@ -384,3 +384,67 @@ input[disabled] {
 .custom-list li {
     margin-bottom: 0.5em; /* Add space between each item */
 }
+
+/* Thank you screen specific styles */
+.thank-you-screen {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to allow scrolling */
+    padding: 15px;
+    font-size: 14px; /* Reduced base font size */
+}
+
+.thank-you-screen h4 {
+    font-size: 18px; /* Slightly smaller heading */
+    margin-bottom: 15px;
+}
+
+.thank-you-screen p {
+    margin-bottom: 10px;
+    line-height: 1.3; /* Tighter line height */
+}
+
+.custom-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 15px;
+}
+
+.custom-list li {
+    margin-bottom: 8px; /* Reduced spacing between list items */
+    font-size: 13px; /* Even smaller font for list items */
+    line-height: 1.3;
+    padding-right: 20px; /* Add some padding for the emoji */
+    text-indent: -20px; /* Create hanging indent for emoji */
+}
+
+.thank-you-screen strong {
+    font-size: 14px; /* Keep strong text slightly larger */
+}
+
+#back-to-home-btn {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* Make sure container allows scrolling if needed */
+.container.thank-you-screen {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .thank-you-screen {
+        font-size: 13px; /* Even smaller on mobile */
+    }
+    
+    .thank-you-screen h4 {
+        font-size: 16px;
+    }
+    
+    .custom-list li {
+        font-size: 12px;
+    }
+}
