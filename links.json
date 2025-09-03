@@ -1,1 +1,18 @@
-
+{
+  "ad1045": {
+    "url": "https://www.some-advertiser-website.com/special-offer",
+    "description": "Campaign for Advertiser X - September Special"
+  },
+  "ad1046": {
+    "url": "https://bit.ly/some-other-link",
+    "description": "Link to a specific blog post"
+  },
+  "summer-sale": {
+    "url": "https://anothersite.co.il/sales/summer-2025",
+    "description": "Summer sale landing page"
+  },
+  "default": {
+    "url": "https://osimyoter.co.il",
+    "description": "A default fallback link"
+  }
+}
